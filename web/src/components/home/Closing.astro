@@ -1,0 +1,88 @@
+---
+export interface AudienceCopy {
+  eyebrow: string;
+  title: string;
+  body: string;
+  chips: { icon: string; text: string }[];
+}
+
+export interface MethodNoteCopy {
+  icon: string;
+  title: string;
+  badge: string;
+  body: string;
+}
+
+export interface FinalCtaCopy {
+  title: string;
+  body: string;
+  cta: string;
+  href: string;
+}
+
+interface Props {
+  audience: AudienceCopy;
+  method: MethodNoteCopy;
+  finalCta: FinalCtaCopy;
+}
+
+const { audience, method, finalCta } = Astro.props;
+---
+
+<!-- Audience callout -->
+<section class="max-w-5xl mx-auto px-5 md:px-8 mt-20">
+  <div class="bg-surface rounded-xl border border-surface-variant p-8">
+    <p class="font-label text-label text-primary font-semibold tracking-wider">{audience.eyebrow}</p>
+    <h2 class="font-headline text-headline text-on mt-2 mb-3">{audience.title}</h2>
+    <p class="text-body text-secondary mb-5 max-w-2xl">{audience.body}</p>
+    <div class="flex flex-wrap gap-3">
+      {
+        audience.chips.map((ch) => (
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container border border-surface-variant text-body text-on">
+            <span class="material-symbols-outlined text-primary text-[1.1rem]" aria-hidden="true">
+              {ch.icon}
+            </span>
+            {ch.text}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Methodology note -->
+<section class="max-w-4xl mx-auto px-5 md:px-8 mt-20" id="methodology">
+  <div class="flex items-start gap-4">
+    <span class="material-symbols-outlined text-primary mt-1" aria-hidden="true">{method.icon}</span>
+    <div class="flex-1">
+      <div class="flex flex-wrap items-center gap-3 mb-2">
+        <h4 class="font-title text-title text-on font-medium">{method.title}</h4>
+        <span class="px-2 py-0.5 rounded-full bg-surface-container text-secondary text-label border border-surface-variant">
+          {method.badge}
+        </span>
+      </div>
+      <p class="text-body text-secondary max-w-2xl">{method.body}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="max-w-2xl mx-auto px-5 md:px-8 mt-20 mb-8 text-center">
+  <h3 class="font-headline text-headline text-on mb-2">{finalCta.title}</h3>
+  <p class="text-body text-secondary mb-6">{finalCta.body}</p>
+  <a
+    href={finalCta.href}
+    data-track-cta="final"
+    class="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-primary text-on-primary font-title text-title font-medium hover:bg-primary-deep transition-colors"
+  >
+    {finalCta.cta}
+    <span class="material-symbols-outlined text-[1.2rem]" aria-hidden="true">arrow_forward</span>
+  </a>
+</section>
+
+<script>
+  import { track, ANALYTICS_EVENTS } from '../../lib/analytics';
+  document.querySelectorAll<HTMLAnchorElement>('a[data-track-cta]').forEach((a) => {
+    a.addEventListener('click', () => track(ANALYTICS_EVENTS.CONCEPT_CTA, { source: a.dataset.trackCta }));
+  });
+</script>

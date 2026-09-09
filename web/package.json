@@ -1,0 +1,31 @@
+{
+  "name": "seeai",
+  "type": "module",
+  "version": "0.3.0",
+  "private": true,
+  "description": "SeeAI — Understand AI by Seeing It. Bilingual interactive AI concept learning platform (MVP: Ontology).",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "check:content": "node scripts/check-content.mjs",
+    "check": "npm run check:content && npm run typecheck && npm run build"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.2.3",
+    "@astrojs/react": "^4.2.2",
+    "astro": "^5.12.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "gray-matter": "^4.0.3",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.8.3"
+  }
+}

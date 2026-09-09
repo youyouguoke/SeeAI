@@ -1,0 +1,43 @@
+---
+import type { MisconceptionsContent } from '../../data/concepts/ontology.types';
+
+interface Props {
+  m: MisconceptionsContent;
+}
+
+const { m } = Astro.props;
+---
+
+<section class="max-w-content mx-auto px-5 md:px-8 py-8 border-t border-surface-variant" id="misconceptions">
+  <p class="font-label text-label text-secondary font-semibold tracking-wider">{m.eyebrow}</p>
+  <h2 class="font-headline text-headline text-on mt-2">{m.title}</h2>
+  <p class="text-body text-secondary mt-2 mb-8">{m.intro}</p>
+
+  <div class="grid lg:grid-cols-3 gap-4">
+    {
+      m.items.map((item) => (
+        <div class="bg-surface rounded-xl border border-surface-variant p-6 flex flex-col">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined text-error text-[1.1rem]" aria-hidden="true">
+              cancel
+            </span>
+            <span class="font-label text-label font-semibold text-error">{m.myth_label}</span>
+          </div>
+          <p class="text-body text-on font-medium mb-5">{item.myth}</p>
+
+          <div class="flex items-center gap-2 mb-3 mt-auto">
+            <span class="material-symbols-outlined text-primary text-[1.1rem]" aria-hidden="true">
+              check_circle
+            </span>
+            <span class="font-label text-label font-semibold text-primary">{m.reality_label}</span>
+          </div>
+          <p class="text-body text-on">{item.reality}</p>
+
+          <p class="mt-5 pt-4 border-t border-surface-variant text-label text-secondary font-medium">
+            {item.tagline}
+          </p>
+        </div>
+      ))
+    }
+  </div>
+</section>

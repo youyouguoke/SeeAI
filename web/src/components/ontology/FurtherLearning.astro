@@ -1,0 +1,60 @@
+---
+import type { FurtherLearningContent } from '../../data/concepts/ontology.types';
+
+interface NextConcept {
+  label: string;
+  title: string;
+  description: string;
+  read_minutes: number;
+  preview_note: string;
+}
+
+interface Props {
+  f: FurtherLearningContent;
+  next: NextConcept;
+  locale: 'zh' | 'en';
+}
+
+const { f, next, locale } = Astro.props;
+const homePath = `/${locale}/`;
+---
+
+<section class="max-w-content mx-auto px-5 md:px-8 py-12 border-t border-surface-variant">
+  <p class="font-label text-label text-secondary font-semibold tracking-wider">{f.eyebrow}</p>
+  <h2 class="font-headline text-headline text-on mt-2 mb-6">{next.title}</h2>
+
+  <div class="grid lg:grid-cols-[1fr_auto] gap-6 items-start max-w-4xl">
+    <div class="bg-surface rounded-xl border border-surface-variant p-6 relative">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="px-2.5 py-0.5 rounded-full bg-surface-container text-secondary text-label border border-surface-variant font-semibold">
+          {next.label}
+        </span>
+        <span class="px-2.5 py-0.5 rounded-full bg-primary-container text-primary-deep text-label font-semibold">
+          {next.preview_note}
+        </span>
+      </div>
+      <p class="text-body text-on mb-4">{next.description}</p>
+      <p class="flex items-center gap-1.5 text-label text-secondary">
+        <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">timer</span>
+        {next.read_minutes} min · Vector Search &amp; Embeddings
+      </p>
+    </div>
+
+    <div class="flex lg:flex-col gap-3">
+      <a
+        href="#workbench"
+        class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-surface text-on text-label font-medium border border-surface-variant hover:border-outline-variant transition-colors"
+      >
+        <span class="material-symbols-outlined text-[1.1rem]" aria-hidden="true">replay</span>
+        {f.review_label}
+      </a>
+      <a
+        href={homePath}
+        class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-surface text-on text-label font-medium border border-surface-variant hover:border-outline-variant transition-colors"
+      >
+        <span class="material-symbols-outlined text-[1.1rem]" aria-hidden="true">home</span>
+        {f.back_home}
+      </a>
+    </div>
+  </div>
+</section>

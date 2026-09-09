@@ -1,0 +1,59 @@
+---
+export interface ArcStep {
+  icon: string;
+  title: string;
+  body: string;
+  tag: string;
+}
+
+export interface LearningArcCopy {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  steps: ArcStep[];
+}
+
+interface Props {
+  c: LearningArcCopy;
+}
+
+const { c } = Astro.props;
+---
+
+<section class="max-w-5xl mx-auto px-5 md:px-8 mt-24">
+  <p class="font-label text-label text-primary font-semibold tracking-wider">{c.eyebrow}</p>
+  <h2 class="font-headline text-headline text-on mt-2">{c.title}</h2>
+  <p class="text-body text-secondary mt-2 mb-10 max-w-2xl">{c.intro}</p>
+
+  <ol class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    {
+      c.steps.map((s, i) => (
+        <li class="bg-surface rounded-xl border border-surface-variant p-5 relative">
+          <span class="absolute top-4 right-4 font-mono text-label text-outline">{`0${i + 1}`}</span>
+          <span
+            class:list={[
+              'w-9 h-9 rounded-lg flex items-center justify-center mb-4',
+              i === 2 ? 'bg-primary-container text-primary-deep' : 'bg-surface-container text-secondary',
+            ]}
+          >
+            <span class="material-symbols-outlined text-[1.2rem]" aria-hidden="true">
+              {s.icon}
+            </span>
+          </span>
+          <h3 class="font-title text-title text-on mb-2">{s.title}</h3>
+          <p class="text-body text-secondary mb-4">{s.body}</p>
+          <span
+            class:list={[
+              'inline-block px-2 py-0.5 rounded text-label border',
+              i === 2
+                ? 'text-primary border-primary-container bg-surface-container font-semibold'
+                : 'text-secondary border-surface-variant',
+            ]}
+          >
+            {s.tag}
+          </span>
+        </li>
+      ))
+    }
+  </ol>
+</section>

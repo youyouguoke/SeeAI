@@ -1,0 +1,37 @@
+{
+  "$schema": "DemoData — Ontology concept, deterministic simulation facts. Sprint 3 renders these statically; Sprint 4 state machine consumes the same nodes/edges (tech design §45).",
+  "scenario": "aerospace_supply_chain",
+  "query": { "entity": "Product A", "question_key": "cost_increase" },
+  "nodes": [
+    { "id": "product-a", "type": "Object", "label_zh": "A 产品", "label_en": "Product A", "code": "SKU-7701" },
+    { "id": "part-001", "type": "Object", "label_zh": "零件 001", "label_en": "Part 001", "code": "Ti-Bracket" },
+    { "id": "supplier-x", "type": "Object", "label_zh": "供应商 X", "label_en": "Supplier X", "code": "Tier-1" },
+    { "id": "price", "type": "Property", "label_zh": "$23.60", "label_en": "$23.60", "code": "was $20.00", "delta": "+$3.60" }
+  ],
+  "edges": [
+    { "from": "product-a", "to": "part-001", "rel_zh": "包含", "rel_en": "contains" },
+    { "from": "part-001", "to": "supplier-x", "rel_zh": "由…供应", "rel_en": "supplied by" },
+    { "from": "supplier-x", "to": "price", "rel_zh": "有价格", "rel_en": "has price" }
+  ],
+  "bom": { "cost_old": 381.42, "cost_new": 435.55, "increase_pct": 14.2 },
+  "factors": [
+    { "key": "supplier", "pct": 3.4, "ref": "Titanium Bracket #001" },
+    { "key": "spec", "pct": 2.1, "ref": "ECO-491" },
+    { "key": "cert", "pct": 1.8, "ref": "ISO 14001" }
+  ],
+  "chain_ev": [
+    { "node": "Object", "label_zh": "产品", "label_en": "Product", "value_zh": "A 产品", "value_en": "Product A" },
+    { "node": "Object", "label_zh": "部件", "label_en": "Component", "value_zh": "零件 001", "value_en": "Part 001" },
+    { "node": "Object", "label_zh": "供应商", "label_en": "Vendor", "value_zh": "供应商 X", "value_en": "Supplier X" },
+    { "node": "Event", "label_zh": "价格变化", "label_en": "Price Change", "value_zh": "价格上涨 18%", "value_en": "Price +18%" }
+  ],
+  "states": [
+    { "key": "question", "order": 1 },
+    { "key": "without_x", "order": 2 },
+    { "key": "problem", "order": 3 },
+    { "key": "with_x", "order": 4 },
+    { "key": "reasoning", "order": 5 },
+    { "key": "result", "order": 6 },
+    { "key": "complete", "order": 7 }
+  ]
+}

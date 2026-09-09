@@ -1,0 +1,155 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero, { type HeroCopy } from '../../components/home/Hero.astro';
+import LivePreview, { type LivePreviewCopy } from '../../components/home/LivePreview.astro';
+import Positioning, { type PositioningCopy } from '../../components/home/Positioning.astro';
+import ConceptMatrix, { type ConceptMatrixCopy } from '../../components/home/ConceptMatrix.astro';
+import LearningArc, { type LearningArcCopy } from '../../components/home/LearningArc.astro';
+import Closing from '../../components/home/Closing.astro';
+import { getStrings } from '../../i18n/index';
+
+const t = getStrings('en');
+
+const hero: HeroCopy = {
+  label: 'Interactive AI Concepts · No hype, pure mechanics',
+  titleTop: 'Understand AI by seeing how it ',
+  titleAccent: 'actually',
+  titleBottom: ' works.',
+  sub: 'Complex AI concepts demystified through real-world friction, interactive before-and-after simulations, and tangible business relationships. No news, no tool lists — just the structures that actually matter.',
+  ctaPrimary: 'Start with Ontology',
+  ctaPrimaryHref: '/en/ontology',
+  ctaSecondary: 'How SeeAI Teaches',
+  ctaSecondaryHref: '#philosophy',
+  meta: ['Time To Concept|3–5 mins', 'Pedagogical Mode|Interactive sandbox', 'Focus Domain|Enterprise AI decisions', 'Prerequisites|None — first-principles intuition'],
+  langNote: 'Bilingual from day one · 中文版同步上线',
+};
+
+const livePreview: LivePreviewCopy = {
+  badge: 'LIVE PREVIEW · Real-time concept micro-sandbox',
+  toggleSilos: 'Siloed Data',
+  toggleOnto: 'With Ontology',
+  siloCaption: 'Same records, mutually isolated → cross-system questions fail',
+  ontoCaption: 'Relationships made explicit → deterministic cross-system reasoning',
+  footerNote: '* Concept preview sandbox · full mechanism lives in the Ontology chapter',
+  ariaLabel: 'Toggle siloed data vs ontology-activated preview',
+};
+
+const positioning: PositioningCopy = {
+  eyebrow: 'Positioning & Boundaries',
+  notTitle: 'What We Are NOT',
+  notIntro: 'We reject the attention economy of modern tech publishing. No generic listings, no endless slides.',
+  notItems: [
+    { title: 'No AI News Ticker:', body: 'We do not track speculative venture announcements or daily model releases.' },
+    { title: 'No Directory of 1,000 Tools:', body: 'Zero affiliate links, sponsored wrappers, or superficial summaries.' },
+    { title: 'No 40-Hour Lecture Marathons:', body: 'No talking heads reciting dense proofs without visual grounding.' },
+    { title: 'No Chatbot Hall of Mirrors:', body: 'No vague conversational AI — only dedicated deterministic teaching sandboxes.' },
+  ],
+  buildTitle: 'What We Build',
+  buildIntro: 'Focused 3–5 minute interactive visual journeys designed to install unbreakable mental models.',
+  buildItems: [
+    { title: 'Full Mechanism Deconstruction:', body: 'First-principles breakdowns of the structures inside every AI concept.' },
+    { title: 'Real-Scenario Driven:', body: 'Supply chains, clinical records, enterprise logs — no abstract fairy tales.' },
+    { title: 'Interactive Learning Loop:', body: 'See → touch → understand → verify, one closed cognitive cycle.' },
+    { title: 'Human-AI Decision Teaching:', body: 'We teach decision logic for human-AI collaboration, not black-box answers.' },
+  ],
+  principle: 'Pedagogical Principle: Sight Over Syntax',
+  principleIcon: 'visibility',
+  promises: ['No ads', 'No clickbait', 'No filler content', 'Bilingual EN / 中文'],
+};
+
+const matrix: ConceptMatrixCopy = {
+  eyebrow: 'CONCEPT MATRIX · 01 of 04',
+  title: 'Featured Interactive Module',
+  rightNote: 'Each interactive module resolves one fundamental structural roadblock in production AI deployments.',
+  featured: {
+    badge: 'Concept 01 · Flagship Interactive Module',
+    timeBadge: '⏱ 5 min experience',
+    domainBadge: 'Core AI Foundation',
+    title: 'Ontology — Why AI Hallucinates Without Enterprise Context',
+    quoteEn: '"The data already exists. The missing piece is the business relationships and context."',
+    quoteSource: 'Core Architectural Axiom',
+    body: 'Language models process semantics, but enterprise operations run on strict relational facts. Watch how siloed tables turn into hallucinations — and how a graph-based ontology bridges the gap.',
+    cta: 'Start Interactive Demo',
+    href: '/en/ontology',
+    sandboxCaption: 'Interactive schema visualizer workbench',
+    fullChapter: 'Explore the full Ontology chapter',
+  },
+  upcomingTitle: 'Upcoming Concepts',
+  upcoming: [
+    {
+      index: 'Concept 02',
+      status: 'In Production',
+      statusDone: true,
+      title: 'Embeddings & Vector Search',
+      body: 'Finding meaning in multi-dimensional vector space. Rotate, project, and measure semantic cosine distance.',
+      visual: 'Visual vector space simulator',
+    },
+    {
+      index: 'Concept 03',
+      status: 'Preview',
+      statusDone: false,
+      title: 'RAG (Retrieval-Augmented Generation)',
+      body: 'Giving models an open-book exam. Inspect chunking strategies, retrieval thresholds, and prompt injection defense.',
+      visual: 'Pipeline latency & grounding bench',
+    },
+    {
+      index: 'Concept 04',
+      status: 'Preview',
+      statusDone: false,
+      title: 'Attention Mechanism',
+      body: 'How Transformers focus on what matters. Watch self-attention weights allocate focus across long sequences.',
+      visual: 'Dynamic attention heatmap demo',
+    },
+  ],
+};
+
+const arc: LearningArcCopy = {
+  eyebrow: 'Pedagogical Framework',
+  title: 'The 5-Step Learning Arc',
+  intro: 'Every concept on SeeAI adheres to a strict psychological flow that converts abstract theory into permanent intuition.',
+  steps: [
+    { icon: 'report_problem', title: 'See the Problem', body: 'Experience the breakdown first — isolated silos, dropped queries, catastrophic failure — before any solution.', tag: 'Friction-first' },
+    { icon: 'compare', title: 'See the Difference', body: 'Interactive split screens and live state toggles let you test the system before and after context structures.', tag: 'Active contrast' },
+    { icon: 'architecture', title: 'Understand the Concept', body: 'Precise, grounded mental models over dense math formulas — why the machinery works the way it does.', tag: 'Core breakthrough' },
+    { icon: 'factory', title: 'Explore the Scenario', body: 'Apply it to automotive supply chain shocks, clinical healthcare records, and enterprise logistics.', tag: 'Applied context' },
+    { icon: 'quiz', title: 'Knowledge Check', body: 'Validate your newly formed mental model with a swift 60-second interactive scenario challenge.', tag: 'Retention lock' },
+  ],
+};
+---
+
+<BaseLayout
+  locale="en"
+  path="/en/"
+  title={t.site.title}
+  description={t.site.description}
+  alternatePath="/zh/"
+>
+  <Hero c={hero} />
+  <LivePreview c={livePreview} id="lp-en" />
+  <Positioning c={positioning} />
+  <ConceptMatrix c={matrix} />
+  <LearningArc c={arc} />
+  <Closing
+    audience={{
+      eyebrow: 'Tactile Insight',
+      title: 'Built for those who lead technical decisions.',
+      body: 'Whether you are an engineering architect explaining graph embeddings to stakeholders, or a product executive auditing hallucination vulnerabilities — SeeAI provides immediate interactive insight, not another paper for your reading list.',
+      chips: [
+        { icon: 'touch_app', text: '100% Deterministic' },
+        { icon: 'bolt', text: 'Instant Interaction' },
+      ],
+    }}
+    method={{
+      icon: 'balance',
+      title: 'Note on Pedagogy & Methodology',
+      badge: 'Zero API Calls',
+      body: 'All visual demonstrations on SeeAI are carefully crafted pedagogical simulations. We do not run live enterprise API queries or black-box LLM calls — we teach structures, not magic.',
+    }}
+    finalCta={{
+      title: 'Ready to see AI clearly?',
+      body: 'Start with Concept 01 and see how business relationships cure data blindness.',
+      cta: 'Launch Interactive Concept 01: Ontology',
+      href: '/en/ontology',
+    }}
+  />
+</BaseLayout>

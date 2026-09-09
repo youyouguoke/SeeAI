@@ -1,0 +1,105 @@
+---
+export interface LivePreviewCopy {
+  badge: string;
+  toggleSilos: string;
+  toggleOnto: string;
+  siloCaption: string;
+  ontoCaption: string;
+  footerNote: string;
+  ariaLabel: string;
+}
+
+interface Props {
+  c: LivePreviewCopy;
+  id: string;
+}
+
+const { c, id } = Astro.props;
+---
+
+<section class="max-w-3xl mx-auto px-5 md:px-8 pb-4">
+  <div class="bg-surface-container rounded-xl border border-surface-variant overflow-hidden" id={id}>
+    <div class="flex items-center justify-between gap-3 p-4 border-b border-surface-variant">
+      <span class="flex items-center gap-1.5 font-label text-label text-secondary">
+        <span class="material-symbols-outlined text-primary text-[1.1rem]" aria-hidden="true">science</span>
+        {c.badge}
+      </span>
+      <div class="flex rounded-lg bg-surface border border-surface-variant p-0.5" role="group" aria-label={c.ariaLabel}>
+        <button
+          type="button"
+          data-lp-tab="silos"
+          aria-pressed="true"
+          class="px-3 py-1 rounded-md text-label font-semibold bg-primary text-on-primary transition-colors"
+        >
+          {c.toggleSilos}
+        </button>
+        <button
+          type="button"
+          data-lp-tab="onto"
+          aria-pressed="false"
+          class="px-3 py-1 rounded-md text-label font-medium text-secondary hover:text-on transition-colors"
+        >
+          {c.toggleOnto}
+        </button>
+      </div>
+    </div>
+
+    <div class="p-5 min-h-[168px]" data-lp-panel="silos">
+      <div class="grid grid-cols-3 gap-2.5 mb-4">
+        {['ERP', 'CRM', 'MES'].map((s) => (
+          <div class="bg-surface rounded-lg border border-surface-variant p-3 text-center">
+            <p class="font-mono text-label font-bold text-secondary">{s}</p>
+            <p class="text-label text-error mt-1 flex items-center justify-center gap-1">
+              <span class="material-symbols-outlined text-[0.9rem]" aria-hidden="true">link_off</span>Isolated
+            </p>
+          </div>
+        ))}
+      </div>
+      <p class="text-label text-secondary text-center">{c.siloCaption}</p>
+    </div>
+
+    <div class="p-5 min-h-[168px] hidden" data-lp-panel="onto">
+      <div class="flex items-center justify-center gap-2 mb-4 flex-wrap">
+        {
+          ['Product', 'Part', 'Supplier'].map((n, i) => (
+            <>
+              {i > 0 && <span class="text-label text-accent font-semibold">— relates →</span>}
+              <span class="bg-surface border border-primary-container rounded-lg px-3 py-1.5 text-label font-semibold text-on">
+                {n}
+              </span>
+            </>
+          ))
+        }
+      </div>
+      <p class="text-label text-primary text-center">{c.ontoCaption}</p>
+    </div>
+
+    <p class="px-4 py-2.5 border-t border-surface-variant text-label text-outline">{c.footerNote}</p>
+  </div>
+</section>
+
+<script define:vars={{ rootId: id }}>
+  const root = document.getElementById(rootId);
+  if (root) {
+    const tabs = Array.from(root.querySelectorAll('[data-lp-tab]'));
+    const panels = {
+      silos: root.querySelector('[data-lp-panel="silos"]'),
+      onto: root.querySelector('[data-lp-panel="onto"]'),
+    };
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const key = tab.dataset.lpTab;
+        tabs.forEach((t) => {
+          const on = t === tab;
+          t.setAttribute('aria-pressed', on ? 'true' : 'false');
+          t.classList.toggle('bg-primary', on);
+          t.classList.toggle('text-on-primary', on);
+          t.classList.toggle('font-semibold', on);
+          t.classList.toggle('text-secondary', !on);
+          t.classList.toggle('font-medium', !on);
+        });
+        Object.entries(panels).forEach(([k, p]) => p?.classList.toggle('hidden', k !== key));
+      });
+    });
+  }
+</script>

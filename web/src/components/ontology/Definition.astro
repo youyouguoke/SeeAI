@@ -1,0 +1,61 @@
+---
+import type { DefinitionContent } from '../../data/concepts/ontology.types';
+
+interface Props {
+  d: DefinitionContent;
+}
+
+const { d } = Astro.props;
+---
+
+<section class="max-w-content mx-auto px-5 md:px-8 py-8 border-t border-surface-variant" id="definition">
+  <p class="font-label text-label text-primary font-semibold tracking-wider">{d.eyebrow}</p>
+  <h2 class="font-headline text-headline text-on mt-2 mb-6">{d.title}</h2>
+
+  <blockquote class="max-w-3xl border-l-2 border-primary pl-5 py-1 mb-8">
+    <p class="font-headline text-headline text-on leading-snug">{d.quote}</p>
+  </blockquote>
+
+  <div class="grid md:grid-cols-2 gap-4 mb-10">
+    <div class="bg-surface rounded-xl border border-surface-variant p-6">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="material-symbols-outlined text-secondary text-[1.1rem]" aria-hidden="true">table_rows</span>
+        <h3 class="font-title text-title text-on">{d.db_label}</h3>
+      </div>
+      <p class="text-body text-secondary">{d.db_body}</p>
+    </div>
+    <div class="bg-surface-container rounded-xl border border-primary-container p-6">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="material-symbols-outlined text-primary text-[1.1rem]" aria-hidden="true">hub</span>
+        <h3 class="font-title text-title text-primary-deep">{d.onto_label}</h3>
+      </div>
+      <p class="text-body text-on">{d.onto_body}</p>
+    </div>
+  </div>
+
+  <p class="font-title text-title text-on font-semibold mb-5">{d.components_label}</p>
+  <div class="grid md:grid-cols-3 gap-4">
+    {
+      d.components.map((c) => (
+        <div class="bg-surface rounded-xl border border-surface-variant p-6">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-lg bg-surface-container text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined" aria-hidden="true">
+                {c.icon}
+              </span>
+            </span>
+            <div>
+              <span class="text-label text-secondary">{c.index}</span>
+              <h3 class="font-title text-title text-on font-semibold leading-tight">{c.name}</h3>
+            </div>
+          </div>
+          <p class="font-label text-label text-primary font-mono mt-3">{c.role}</p>
+          <p class="text-body text-on mt-2">{c.body}</p>
+          <p class="text-label text-secondary mt-3 pt-3 border-t border-surface-variant">
+            e.g. {c.example}
+          </p>
+        </div>
+      ))
+    }
+  </div>
+</section>

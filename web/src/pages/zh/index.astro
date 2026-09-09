@@ -1,0 +1,156 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero, { type HeroCopy } from '../../components/home/Hero.astro';
+import LivePreview, { type LivePreviewCopy } from '../../components/home/LivePreview.astro';
+import Positioning, { type PositioningCopy } from '../../components/home/Positioning.astro';
+import ConceptMatrix, { type ConceptMatrixCopy } from '../../components/home/ConceptMatrix.astro';
+import LearningArc, { type LearningArcCopy } from '../../components/home/LearningArc.astro';
+import Closing from '../../components/home/Closing.astro';
+import { getStrings } from '../../i18n/index';
+
+const t = getStrings('zh');
+
+const hero: HeroCopy = {
+  label: '交互式 AI 原理学习平台 · 拒绝空泛炒作，聚焦底层机制',
+  titleTop: '看清 AI 如何',
+  titleAccent: '真正',
+  titleBottom: '运作。',
+  sub: '通过真实企业场景与交互式微缩演示，把复杂的 AI 概念讲清楚。不讲新闻，不堆工具——只讲清楚 AI 系统里真正重要的结构。',
+  ctaPrimary: '从本体论开始',
+  ctaPrimaryHref: '/zh/ontology',
+  ctaSecondary: '了解 SeeAI 如何工作',
+  ctaSecondaryHref: '#philosophy',
+  meta: ['Time To Concept|3–5 分钟', 'Pedagogical Mode|交互式沙盘推演', 'Focus Domain|企业级 AI 决策场景', 'Prerequisites|零门槛 · 第一性原理直觉'],
+  langNote: '中文站首发 · 英文版同步上线',
+};
+
+const livePreview: LivePreviewCopy = {
+  badge: 'LIVE PREVIEW · 概念实时微缩沙盘',
+  toggleSilos: '数据孤岛',
+  toggleOnto: '本体激活',
+  siloCaption: '同一批数据，互相孤立 → 无法回答跨系统问题',
+  ontoCaption: '关系被显式写入 → 跨系统问题可确定性推理',
+  footerNote: '* 概念预览沙盘 · 具体机制以 Ontology 章节内的完整演示为准',
+  ariaLabel: '切换数据孤岛与本体激活预览',
+};
+
+const positioning: PositioningCopy = {
+  eyebrow: '定位与界限',
+  notTitle: 'SeeAI 绝不是什么',
+  notIntro: '我们拒绝现代科技媒体的注意力经济。这里没有泛泛的列表，也没有无休止的幻灯片。',
+  notItems: [
+    { title: '不做 AI 新闻聚合器：', body: '不追踪风险投资动向，不报道每日模型发布。' },
+    { title: '不做工具目录大全：', body: '没有联盟营销链接，没有被赞助的"套壳"工具推荐。' },
+    { title: '不做 40 小时视频讲座：', body: '没有对着镜头念数学证明的" talking head "。' },
+    { title: '不做聊天机器人魔镜：', body: '不做模糊对话式 AI——做确定的交互式教学演示。' },
+  ],
+  buildTitle: 'SeeAI 只做这些',
+  buildIntro: '把每一个 AI 概念做成 3–5 分钟的交互式视觉推演，装进你的长期直觉。',
+  buildItems: [
+    { title: '完整机制拆解：', body: '从第一性原理出发，拆解每个 AI 概念的底层结构。' },
+    { title: '真实场景驱动：', body: '用供应链、临床数据、企业日志等真实场景演示，不讲抽象童话。' },
+    { title: '交互式学习闭环：', body: '看见 → 动手 → 理解 → 检验，形成完整认知闭环。' },
+    { title: 'AI 协作决策教学：', body: '教的是人机协作下的决策逻辑，不是替你做决策的黑箱。' },
+  ],
+  principle: '教学信条：Sight Over Syntax —— 视觉先于语法',
+  principleIcon: 'visibility',
+  promises: ['无广告', '无点击诱饵', '无填充内容', '中英双语'],
+};
+
+const matrix: ConceptMatrixCopy = {
+  eyebrow: 'CONCEPT MATRIX · 01 of 04',
+  title: '首期深度交互模块',
+  rightNote: '每一个交互模块，解决生产级 AI 落地中的一个根本性结构难题。',
+  featured: {
+    badge: '概念 01 · 旗舰交互模块',
+    timeBadge: '⏱ 5 分钟体验',
+    domainBadge: '核心 AI 基础',
+    title: '本体论 — 为什么缺少企业上下文，AI 就会幻觉',
+    quoteEn: '"The data already exists. The missing piece is the business relationships and context."',
+    quoteZh: '“数据已经存在，缺失的是业务关系与上下文。”',
+    quoteSource: '核心架构公理',
+    body: '语言模型处理语义，企业运转依赖严格的关系型事实。亲手拆开看：孤立的数据表如何一步步演变成幻觉，图结构的本体论如何补上缺失的关系层。',
+    cta: '进入交互演示',
+    href: '/zh/ontology',
+    sandboxCaption: '交互式 Schema 可视化工作台',
+    fullChapter: '探索本体论完整章节',
+  },
+  upcomingTitle: '后续上线概念预览',
+  upcoming: [
+    {
+      index: '概念 02',
+      status: 'In Production',
+      statusDone: true,
+      title: 'Embedding 与向量检索',
+      body: '在高维向量空间中寻找语义。旋转、投影、度量自然语言之间的余弦距离。',
+      visual: '向量空间交互模拟器',
+    },
+    {
+      index: '概念 03',
+      status: 'Preview',
+      statusDone: false,
+      title: 'RAG（检索增强生成）',
+      body: '给模型一场开卷考试。检查分块策略、检索阈值与提示注入防护机制。',
+      visual: '管道时延与落地基准台',
+    },
+    {
+      index: '概念 04',
+      status: 'Preview',
+      statusDone: false,
+      title: '注意力机制',
+      body: 'Transformer 如何聚焦重点。观察自注意力权重如何在长文本序列中动态分配。',
+      visual: '动态注意力热力图演示',
+    },
+  ],
+};
+
+const arc: LearningArcCopy = {
+  eyebrow: '教学框架',
+  title: '5 步认知闭环',
+  intro: 'SeeAI 上的每一个概念，都遵循一条严格的心理学叙事路径：把抽象理论变成长期直觉。',
+  steps: [
+    { icon: 'report_problem', title: '看到问题', body: '先体验崩溃。展示孤立的数据孤岛、中断的查询、彻底的失败——不给任何解决方案。', tag: '摩擦先行' },
+    { icon: 'compare', title: '看到变化', body: '交互式分屏与实时状态开关，亲手测试引入上下文结构前后的系统。', tag: '主动对比' },
+    { icon: 'architecture', title: '理解概念', body: '精确、落地的思维模型，取代密集的数学公式——讲清机制为什么这样运转。', tag: '核心突破' },
+    { icon: 'factory', title: '探索场景', body: '应用到汽车供应链中断、临床医疗记录、企业物流等真实场景。', tag: '落地语境' },
+    { icon: 'quiz', title: '知识检查', body: '用 60 秒的交互场景挑战，检验刚建立的思维模型。', tag: '巩固留存' },
+  ],
+};
+---
+
+<BaseLayout
+  locale="zh"
+  path="/zh/"
+  title={t.site.title}
+  description={t.site.description}
+  alternatePath="/en/"
+>
+  <Hero c={hero} />
+  <LivePreview c={livePreview} id="lp-zh" />
+  <Positioning c={positioning} />
+  <ConceptMatrix c={matrix} />
+  <LearningArc c={arc} />
+  <Closing
+    audience={{
+      eyebrow: 'Tactile Insight',
+      title: '为技术决策者而建。',
+      body: '无论你是向利益相关方解释图嵌入的架构师，还是审计幻觉漏洞的产品高管——SeeAI 提供即时的交互式洞察，而不是又一篇需要收藏的论文。',
+      chips: [
+        { icon: 'touch_app', text: '100% 确定性演示' },
+        { icon: 'bolt', text: '零等待即时交互' },
+      ],
+    }}
+    method={{
+      icon: 'balance',
+      title: '方法论与教学声明',
+      badge: '零 API 调用',
+      body: 'SeeAI 上所有可视化演示均为精心设计的教学模拟，不运行真实的企业 API 查询，不调用黑盒大语言模型。我们教的是结构，不是魔法。',
+    }}
+    finalCta={{
+      title: '准备好真正看清 AI 了吗？',
+      body: '从概念 01 开始，看业务关系如何治愈数据失明。',
+      cta: '启动交互概念 01：本体论',
+      href: '/zh/ontology',
+    }}
+  />
+</BaseLayout>

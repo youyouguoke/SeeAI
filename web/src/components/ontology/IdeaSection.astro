@@ -1,0 +1,17 @@
+---
+import type { IdeaContent } from '../../data/concepts/ontology.types';
+
+interface Props {
+  idea: IdeaContent;
+}
+
+const { idea } = Astro.props;
+---
+
+<section class="max-w-content mx-auto px-5 md:px-8 py-8 border-t border-surface-variant">
+  <p class="font-label text-label text-primary font-semibold tracking-wider">{idea.label}</p>
+  <h2 class="font-headline text-headline text-on mt-2 mb-5">{idea.title}</h2>
+  <div class="max-w-2xl text-body text-on leading-relaxed">
+    <slot />
+  </div>
+</section>

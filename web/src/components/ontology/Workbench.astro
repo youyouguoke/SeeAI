@@ -1,0 +1,279 @@
+---
+import type { WorkbenchContent } from '../../data/concepts/ontology.types';
+
+export interface ChainNode {
+  type: string;
+  label: string;
+  code: string;
+  highlight?: boolean;
+}
+
+interface Props {
+  w: WorkbenchContent;
+  /** 来自 ontology-demo.json 的语义链（对象/属性节点） */
+  chainNodes: ChainNode[];
+  /** 节点间的有向关系标签，长度 = chainNodes.length - 1 */
+  chainRels: string[];
+}
+
+const { w, chainNodes, chainRels } = Astro.props;
+const toneClass = {
+  neutral: 'text-secondary bg-surface border-outline-variant',
+  warn: 'text-on bg-primary-container border-primary-container',
+  bad: 'text-error bg-error-container border-error-container',
+} as const;
+---
+
+<section class="max-w-[1100px] mx-auto px-5 md:px-8 pb-16" id="workbench" aria-label={w.title}>
+  <div class="flex flex-wrap items-end justify-between gap-3 mb-5">
+    <div>
+      <p class="font-label text-label text-secondary uppercase tracking-wider">{w.eyebrow}</p>
+      <h2 class="font-title text-title text-on mt-1">{w.title}</h2>
+    </div>
+    <p class="flex items-center gap-2 text-label text-secondary">
+      <span class="relative flex h-2.5 w-2.5" aria-hidden="true">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-40"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-secondary"></span>
+      </span>
+      <span data-wb-state-label>{w.states[0].state_label}</span>
+    </p>
+  </div>
+
+  <div class="bg-surface-container rounded-xl border border-surface-variant overflow-hidden">
+    <!-- Tabs -->
+    <div class="flex flex-wrap gap-2 p-4 border-b border-surface-variant" role="tablist" aria-label={w.title}>
+      {
+        w.states.map((s, i) => (
+          <button
+            type="button"
+            role="tab"
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-controls={`wb-panel-${i}`}
+            id={`wb-tab-${i}`}
+            data-wb-tab={i}
+            class:list={[
+              'px-4 py-1.5 rounded-lg text-label font-medium transition-colors',
+              i === 0
+                ? 'bg-primary text-on-primary font-semibold'
+                : 'bg-surface text-secondary hover:text-on',
+            ]}
+          >
+            {s.tab}
+          </button>
+        ))
+      }
+    </div>
+
+    <!-- Panel 0: Siloed tables -->
+    <div id="wb-panel-0" role="tabpanel" aria-labelledby="wb-tab-0" class="p-5 md:p-8">
+      <div class="flex flex-wrap items-center gap-2 mb-5">
+        <span class="text-label font-bold text-error px-2.5 py-1 rounded border border-error-container bg-surface">
+          {w.silo_badge}
+        </span>
+        <span class="text-label text-secondary">{w.silo_sub}</span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
+        {
+          w.silo_cards.map((c) => (
+            <div class="bg-surface rounded-lg border border-surface-variant p-4 relative">
+              <span class="absolute top-3 right-3 text-label text-outline">{c.badge}</span>
+              <p class="font-bold text-on">{c.system}</p>
+              <p class="text-label font-semibold text-secondary mt-1.5">{c.subtitle}</p>
+              <p class="text-secondary mt-0.5 text-label">{c.detail}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="bg-surface rounded-lg border border-surface-variant p-5">
+        <p class="text-label font-semibold text-secondary">{w.query_label}</p>
+        <p class="text-on mt-1.5 font-medium">{w.query_text}</p>
+        <div class="mt-3 pl-4 border-l-2 border-outline-variant">
+          <p class="text-sm font-semibold text-secondary">{w.query_answer}</p>
+          <p class="text-label text-error font-medium mt-1">{w.query_fail}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 1: Disconnection point -->
+    <div id="wb-panel-1" role="tabpanel" aria-labelledby="wb-tab-1" class="p-5 md:p-8 hidden">
+      <div class="grid lg:grid-cols-2 gap-6 items-start">
+        <div>
+          <span class="text-label font-bold text-error px-2.5 py-1 rounded border border-error-container bg-surface">
+            {w.silo_badge}
+          </span>
+          <p class="text-on font-semibold mt-5 mb-3">{w.missing_label}</p>
+          <ul class="space-y-2.5">
+            {
+              w.missing_items.map((m) => (
+                <li class="flex items-center gap-2.5 text-body text-on">
+                  <span class="w-1.5 h-1.5 rounded-full bg-error shrink-0" aria-hidden="true" />
+                  {m}
+                </li>
+              ))
+            }
+          </ul>
+          <div class="flex flex-wrap gap-2 mt-6">
+            {
+              w.isolated_chips.map((c) => (
+                <span class="text-label font-mono font-bold px-2.5 py-1 rounded bg-surface border border-surface-variant text-secondary">
+                  {c} [Isolated]
+                </span>
+              ))
+            }
+          </div>
+        </div>
+        <div class="bg-surface rounded-lg border border-surface-variant p-6 text-center">
+          <p class="text-label font-bold text-secondary mb-4">{w.barrier_label}</p>
+          <p class="font-headline text-headline font-semibold text-on leading-snug">{w.barrier_quote}</p>
+          <p class="text-body text-secondary mt-4 max-w-md mx-auto">{w.barrier_body}</p>
+          <p class="mt-5 pt-4 border-t border-surface-variant text-label text-secondary font-medium">{w.status_line}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 2: Ontology activated -->
+    <div id="wb-panel-2" role="tabpanel" aria-labelledby="wb-tab-2" class="p-5 md:p-8 hidden">
+      <div class="flex flex-wrap items-center gap-2 mb-6">
+        <span class="text-label font-bold text-accent px-2.5 py-1 rounded border border-primary-container bg-surface">
+          {w.chain_badge}
+        </span>
+        <span class="text-label text-secondary">{w.chain_sub}</span>
+      </div>
+
+      <div class="flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
+        {
+          chainNodes.map((n, i) => (
+            <>
+              {i > 0 && (
+                <div class="self-center font-semibold text-accent bg-surface px-3 py-1 rounded-md border border-primary-container text-sm">
+                  ↓ {chainRels[i - 1]}
+                </div>
+              )}
+              <div
+                class:list={[
+                  'flex-1 bg-surface rounded-lg border p-4',
+                  n.highlight ? 'border-primary-container' : 'border-surface-variant',
+                ]}
+              >
+                <p class:list={['text-label', n.highlight ? 'text-accent' : 'text-secondary']}>{n.type}</p>
+                <p class:list={['text-sm font-bold mt-0.5', n.highlight ? 'text-accent' : 'text-on']}>{n.label}</p>
+                <p class="text-label text-secondary font-mono mt-0.5">{n.code}</p>
+              </div>
+            </>
+          ))
+        }
+      </div>
+
+      <p class="text-label text-secondary text-center mt-6 max-w-xl mx-auto">{w.chain_note}</p>
+    </div>
+
+    <!-- Panel 3: Context resolved -->
+    <div id="wb-panel-3" role="tabpanel" aria-labelledby="wb-tab-3" class="p-5 md:p-8 hidden">
+      <div class="grid lg:grid-cols-2 gap-6 items-start">
+        <div>
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <span class="text-label font-bold text-secondary px-2.5 py-1 rounded border border-surface-variant bg-surface">
+              {w.path_badge}
+            </span>
+            <span class="text-label text-secondary">{w.path_sub}</span>
+          </div>
+          <p class="text-label text-secondary mb-4">{w.path_intro}</p>
+          <ol class="space-y-3">
+            {
+              w.steps.map((s, i) => (
+                <li class="flex items-start gap-3 bg-surface rounded-lg border border-surface-variant p-3.5">
+                  <span class="w-6 h-6 rounded-full bg-surface-container text-accent font-mono text-label font-bold flex items-center justify-center shrink-0">
+                    {i + 1}
+                  </span>
+                  <span class="flex-1 min-w-0">
+                    <span class="block text-label font-bold text-on">{s.title}</span>
+                    <span class="block text-label text-secondary mt-0.5">{s.detail}</span>
+                  </span>
+                  <span class:list={['text-label font-mono px-2 py-0.5 rounded border whitespace-nowrap', toneClass[s.tone]]}>
+                    {s.result}
+                  </span>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        <div class="bg-surface rounded-lg border border-surface-variant p-6">
+          <div class="flex flex-wrap items-center gap-2 mb-5">
+            <span class="text-label font-bold text-success px-2.5 py-1 rounded border border-primary-container bg-surface">
+              {w.resolved_badge}
+            </span>
+            <span class="text-label text-secondary">{w.resolved_sub}</span>
+          </div>
+          <div class="grid grid-cols-3 gap-3 mb-5">
+            <div>
+              <p class="text-label text-secondary">{w.resolved_labels.root}</p>
+              <p class="text-title font-bold text-on mt-0.5">{w.resolved_values.root}</p>
+            </div>
+            <div>
+              <p class="text-label text-secondary">{w.resolved_labels.bom}</p>
+              <p class="text-title font-bold text-on mt-0.5">{w.resolved_values.bom}</p>
+            </div>
+            <div>
+              <p class="text-label text-secondary">{w.resolved_labels.increase}</p>
+              <p class="text-title font-bold text-error mt-0.5">{w.resolved_values.increase}</p>
+            </div>
+          </div>
+          <p class="text-label font-bold text-on mb-3">{w.factors_label}</p>
+          <ul class="space-y-3">
+            {
+              w.factors.map((f) => (
+                <li class="flex items-start justify-between gap-3">
+                  <span class="min-w-0">
+                    <span class="block text-body font-semibold text-on">{f.label}</span>
+                    <span class="block text-label text-secondary mt-0.5">{f.note}</span>
+                  </span>
+                  <span class="font-mono font-bold text-on whitespace-nowrap">{f.value}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="mt-5 pt-4 border-t border-surface-variant text-body text-on font-medium">
+            {w.resolved_answer}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <p class="px-5 md:px-8 py-3 border-t border-surface-variant text-label text-secondary flex flex-wrap gap-x-4 gap-y-1">
+      <span>{w.sim_note}</span>
+      <span class="text-outline">{w.scenario_note}</span>
+    </p>
+  </div>
+</section>
+
+<script>
+  import { track, ANALYTICS_EVENTS } from '../../lib/analytics';
+
+  const root = document.getElementById('workbench');
+  if (root) {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-wb-tab]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+    const stateLabel = root.querySelector<HTMLElement>('[data-wb-state-label]');
+    const stateTexts = tabs.map((t) => t.textContent ?? '');
+
+    const activate = (idx: number) => {
+      tabs.forEach((tab, i) => {
+        const on = i === idx;
+        tab.setAttribute('aria-selected', on ? 'true' : 'false');
+        tab.classList.toggle('bg-primary', on);
+        tab.classList.toggle('text-on-primary', on);
+        tab.classList.toggle('font-semibold', on);
+        tab.classList.toggle('bg-surface', !on);
+        tab.classList.toggle('text-secondary', !on);
+        panels[i]?.classList.toggle('hidden', !on);
+      });
+      if (stateLabel) stateLabel.textContent = stateTexts[idx] ?? '';
+      track(ANALYTICS_EVENTS.WORKBENCH_STATE, { state: idx + 1 });
+    };
+
+    tabs.forEach((tab, i) => tab.addEventListener('click', () => activate(i)));
+  }
+</script>

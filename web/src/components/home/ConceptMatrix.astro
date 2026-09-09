@@ -1,0 +1,142 @@
+---
+export interface ConceptMatrixCopy {
+  eyebrow: string;
+  title: string;
+  rightNote: string;
+  featured: {
+    badge: string;
+    timeBadge: string;
+    domainBadge: string;
+    title: string;
+    quoteEn: string;
+    quoteZh?: string;
+    quoteSource: string;
+    body: string;
+    cta: string;
+    href: string;
+    sandboxCaption: string;
+    fullChapter: string;
+  };
+  upcomingTitle: string;
+  upcoming: { index: string; status: string; statusDone: boolean; title: string; body: string; visual: string }[];
+}
+
+interface Props {
+  c: ConceptMatrixCopy;
+}
+
+const { c } = Astro.props;
+---
+
+<section class="max-w-5xl mx-auto px-5 md:px-8 mt-24" id="concept">
+  <div class="flex flex-wrap items-end justify-between gap-3 mb-8">
+    <div>
+      <p class="font-label text-label text-primary font-semibold tracking-wider">{c.eyebrow}</p>
+      <h2 class="font-headline text-headline text-on mt-2">{c.title}</h2>
+    </div>
+    <p class="text-body text-secondary max-w-sm">{c.rightNote}</p>
+  </div>
+
+  <!-- Featured module -->
+  <div class="bg-surface-container rounded-xl border border-surface-variant p-6 md:p-8">
+    <div class="grid lg:grid-cols-2 gap-8 items-center">
+      <div>
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          <span class="px-3 py-1 rounded-full bg-primary text-on-primary text-label font-semibold">
+            {c.featured.badge}
+          </span>
+          <span class="font-label text-label text-secondary">{c.featured.timeBadge}</span>
+          <span class="flex items-center gap-1 font-label text-label text-on bg-surface px-3 py-1 rounded-md border border-surface-variant">
+            <span class="material-symbols-outlined text-primary text-[1rem]" aria-hidden="true">psychology</span>
+            {c.featured.domainBadge}
+          </span>
+        </div>
+        <h3 class="font-headline text-headline text-on mb-4">{c.featured.title}</h3>
+        <blockquote class="border-l-2 border-primary pl-4 mb-4">
+          <p class="font-title text-title text-on">{c.featured.quoteEn}</p>
+          {c.featured.quoteZh && <p class="font-title text-title text-secondary mt-1">{c.featured.quoteZh}</p>}
+          <footer class="font-label text-label text-secondary mt-2">— {c.featured.quoteSource}</footer>
+        </blockquote>
+        <p class="text-body text-secondary mb-6">{c.featured.body}</p>
+        <div class="flex flex-wrap items-center gap-4">
+          <a
+            href={c.featured.href}
+            data-track-cta="matrix_featured"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-on-primary font-title text-title font-medium hover:bg-primary-deep transition-colors"
+          >
+            <span class="material-symbols-outlined text-[1.2rem]" aria-hidden="true">play_arrow</span>
+            {c.featured.cta}
+          </a>
+          <a href={c.featured.href} class="font-label text-label text-secondary hover:text-primary transition-colors underline underline-offset-4 decoration-outline-variant">
+            {c.featured.fullChapter} →
+          </a>
+        </div>
+      </div>
+
+      <!-- Mini sandbox preview -->
+      <div class="bg-surface rounded-xl border border-surface-variant p-5">
+        <p class="flex items-center gap-1.5 font-label text-label text-secondary mb-4">
+          <span class="material-symbols-outlined text-primary text-[1.1rem]" aria-hidden="true">hub</span>
+          {c.featured.sandboxCaption}
+        </p>
+        <div class="space-y-2.5">
+          <div class="flex items-center gap-2.5 bg-surface-container rounded-lg p-3 border border-surface-variant">
+            <span class="material-symbols-outlined text-secondary text-[1.1rem]" aria-hidden="true">link_off</span>
+            <span class="text-label font-semibold text-on">SKU-994</span>
+            <span class="text-label text-error ml-auto">No Vendor Link</span>
+          </div>
+          <div class="flex items-center gap-2.5 bg-surface-container rounded-lg p-3 border border-surface-variant">
+            <span class="material-symbols-outlined text-secondary text-[1.1rem]" aria-hidden="true">link_off</span>
+            <span class="text-label font-semibold text-on">Tier-1 Order</span>
+            <span class="text-label text-error ml-auto">No Stock Status</span>
+          </div>
+          <div class="flex items-center gap-2.5 bg-surface-container rounded-lg p-3 border border-primary-container">
+            <span class="material-symbols-outlined text-primary text-[1.1rem]" aria-hidden="true">hub</span>
+            <span class="text-label font-semibold text-on">Product → Part → Supplier</span>
+            <span class="text-label text-primary ml-auto">Context-Aware</span>
+          </div>
+        </div>
+        <p class="mt-4 text-label text-secondary text-center">{c.featured.sandboxCaption}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upcoming -->
+  <h3 class="font-title text-title text-on font-semibold mt-10 mb-4">{c.upcomingTitle}</h3>
+  <div class="grid md:grid-cols-3 gap-4">
+    {
+      c.upcoming.map((u) => (
+        <div class="bg-surface rounded-xl border border-surface-variant p-6">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="font-label text-label text-secondary font-semibold">{u.index}</span>
+            <span
+              class:list={[
+                'px-2 py-0.5 rounded-full text-label border',
+                u.statusDone
+                  ? 'bg-surface-container text-on border-surface-variant'
+                  : 'bg-surface text-secondary border-outline-variant',
+              ]}
+            >
+              {u.status}
+            </span>
+          </div>
+          <h4 class="font-title text-title text-on mb-2">{u.title}</h4>
+          <p class="text-body text-secondary mb-4">{u.body}</p>
+          <p class="flex items-center gap-1.5 font-label text-label text-secondary">
+            <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">
+              {u.statusDone ? 'science' : 'lock_clock'}
+            </span>
+            {u.visual}
+          </p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  import { track, ANALYTICS_EVENTS } from '../../lib/analytics';
+  document.querySelectorAll<HTMLAnchorElement>('a[data-track-cta]').forEach((a) => {
+    a.addEventListener('click', () => track(ANALYTICS_EVENTS.CONCEPT_CTA, { source: a.dataset.trackCta }));
+  });
+</script>

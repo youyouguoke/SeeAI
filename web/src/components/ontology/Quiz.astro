@@ -1,0 +1,116 @@
+---
+interface QuizData {
+  eyebrow: string;
+  badge: string;
+  scenario: string;
+  question: string;
+  options: string[];
+  answer_index: number;
+  feedbacks: string[];
+  correct_title: string;
+  wrong_title: string;
+}
+
+interface Props {
+  q: QuizData;
+}
+
+const { q } = Astro.props;
+---
+
+<section class="max-w-content mx-auto px-5 md:px-8 py-8 border-t border-surface-variant" id="quiz">
+  <div class="max-w-3xl">
+    <div class="flex flex-wrap items-center gap-3 mb-2">
+      <span class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-[1.1rem]" aria-hidden="true">quiz</span>
+        <span class="font-label text-label font-semibold text-on">{q.eyebrow}</span>
+      </span>
+      <span class="px-2 py-0.5 rounded bg-surface-container text-secondary text-label border border-surface-variant">
+        {q.badge}
+      </span>
+    </div>
+
+    <p class="text-body text-secondary mb-5">{q.scenario}</p>
+    <h3 class="font-title text-title text-on font-semibold mb-6">{q.question}</h3>
+
+    <div class="space-y-3" role="group" aria-label={q.question}>
+      {
+        q.options.map((opt, i) => (
+          <button
+            type="button"
+            data-quiz-option={i}
+            class="quiz-option w-full text-left p-4 rounded-lg bg-surface border border-surface-variant hover:border-outline-variant transition-colors flex items-start gap-3"
+          >
+            <span
+              data-quiz-marker={i}
+              class="w-6 h-6 rounded-full bg-surface-container text-secondary font-mono text-label flex items-center justify-center shrink-0 border border-surface-variant"
+              aria-hidden="true"
+            >
+              {'ABC'[i]}
+            </span>
+            <span class="text-body text-on" data-quiz-text={i}>
+              {opt}
+            </span>
+          </button>
+        ))
+      }
+    </div>
+
+    <div data-quiz-feedback hidden class="mt-5 flex items-start gap-2.5">
+      <span data-quiz-feedback-icon class="material-symbols-outlined mt-0.5" aria-hidden="true">
+        check_circle
+      </span>
+      <div>
+        <p data-quiz-feedback-title class="font-title text-title font-semibold" />
+        <p data-quiz-feedback-body class="text-body mt-1" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ answerIndex: q.answer_index, feedbacks: q.feedbacks, correctTitle: q.correct_title, wrongTitle: q.wrong_title }}>
+  const options = Array.from(document.querySelectorAll('[data-quiz-option]'));
+  const feedback = document.querySelector('[data-quiz-feedback]');
+  const fIcon = document.querySelector('[data-quiz-feedback-icon]');
+  const fTitle = document.querySelector('[data-quiz-feedback-title]');
+  const fBody = document.querySelector('[data-quiz-feedback-body]');
+  let answered = false;
+
+  options.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const i = Number(btn.dataset.quizOption);
+      const correct = i === answerIndex;
+      options.forEach((b, j) => {
+        const marker = document.querySelector(`[data-quiz-marker="${j}"]`);
+        const text = document.querySelector(`[data-quiz-text="${j}"]`);
+        b.disabled = true;
+        if (j === answerIndex) {
+          b.classList.add('border-primary-container', 'bg-surface-container');
+          marker?.classList.add('text-primary', 'border-primary-container');
+          text?.classList.add('font-medium');
+        } else if (j === i && !correct) {
+          b.classList.add('border-error-container');
+          marker?.classList.add('text-error');
+        } else {
+          b.classList.add('opacity-60');
+        }
+      });
+      if (feedback && fIcon && fTitle && fBody) {
+        feedback.hidden = false;
+        fIcon.textContent = correct ? 'check_circle' : 'cancel';
+        fIcon.classList.toggle('text-primary', correct);
+        fIcon.classList.toggle('text-error', !correct);
+        fTitle.textContent = correct ? correctTitle : wrongTitle;
+        fTitle.classList.toggle('text-primary', correct);
+        fTitle.classList.toggle('text-error', !correct);
+        fBody.textContent = feedbacks[i] ?? '';
+      }
+      if (!answered) {
+        answered = true;
+        import('../../lib/analytics').then(({ track, ANALYTICS_EVENTS }) =>
+          track(ANALYTICS_EVENTS.QUIZ_SUBMIT, { correct }),
+        );
+      }
+    });
+  });
+</script>

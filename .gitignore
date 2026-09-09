@@ -1,0 +1,6 @@
+# stitch 设计包（本地资产，体积大，不入库）
+stitch_seeai_interactive_learning_platform/
+
+# 系统文件
+.DS_Store
+*.log

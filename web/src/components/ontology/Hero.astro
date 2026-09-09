@@ -1,0 +1,66 @@
+---
+interface MetaItem {
+  icon: string;
+  text: string;
+}
+
+interface Props {
+  conceptLabel: string;
+  title: string;
+  teaser: string;
+  teaserEmphasis: string;
+  meta: MetaItem[];
+  langSwitch: { href: string; label: string };
+}
+
+const { conceptLabel, title, teaser, teaserEmphasis, meta, langSwitch } = Astro.props;
+---
+
+<section class="max-w-content mx-auto px-5 md:px-8 pt-12 pb-10">
+  <div class="anim-fade-up">
+    <div class="flex flex-wrap items-center gap-3">
+      <span class="px-3 py-1 rounded-full bg-primary text-on-primary text-label font-semibold">
+        {conceptLabel}
+      </span>
+      <span class="h-4 w-px bg-outline-variant" aria-hidden="true"></span>
+      <span class="text-secondary font-medium text-body">Deep Interactive Module</span>
+    </div>
+
+    <h1 class="font-display text-display text-on mt-6 mb-5 max-w-3xl tracking-tight">
+      {title}
+    </h1>
+
+    <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-body text-secondary">
+      {
+        meta.map((m, i) => (
+          <>
+            <span class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-primary text-[1.1rem]" aria-hidden="true">
+                {m.icon}
+              </span>
+              <span>{m.text}</span>
+            </span>
+            {i < meta.length - 1 && <span class="hidden sm:block h-3 w-px bg-outline-variant" aria-hidden="true" />}
+          </>
+        ))
+      }
+    </div>
+
+    <p class="font-body text-body text-on font-medium max-w-2xl mt-6">
+      {teaser}
+      <strong class="block mt-2 font-semibold text-primary">{teaserEmphasis}</strong>
+    </p>
+
+    <p class="mt-5">
+      <a
+        href={langSwitch.href}
+        hreflang={langSwitch.label === '中文版' ? 'zh' : 'en'}
+        lang={langSwitch.label === '中文版' ? 'zh' : 'en'}
+        class="inline-flex items-center gap-1.5 text-label font-medium text-secondary hover:text-primary transition-colors"
+      >
+        <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">translate</span>
+        {langSwitch.label}
+      </a>
+    </p>
+  </div>
+</section>

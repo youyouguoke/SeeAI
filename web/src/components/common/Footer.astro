@@ -1,0 +1,35 @@
+---
+import { getStrings, type Locale } from '../../i18n/index';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getStrings(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="w-full bg-surface border-t border-surface-variant py-10 mt-24">
+  <div class="max-w-content mx-auto px-5 md:px-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <p class="text-body text-secondary">
+      © {year} SeeAI — {t.footer.tagline}
+      <span class="block mt-1 text-label text-outline">{t.footer.note}</span>
+    </p>
+    <nav class="flex items-center gap-5 text-body text-secondary" aria-label="Footer">
+      <a href={`/${locale}/#concept`} class="text-on font-medium hover:text-primary transition-colors">
+        {t.footer.allConcepts}
+      </a>
+      <a href={`/${locale}/#philosophy`} class="hover:text-on transition-colors">
+        {t.footer.methodology}
+      </a>
+      <span class="hidden sm:flex items-center gap-1.5 text-label">
+        <span class="text-outline">{t.footer.language}:</span>
+        <span class="text-on font-medium">{locale === 'zh' ? '中文' : 'English'}</span>
+      </span>
+      <a href="https://seeai.site" class="text-on font-medium hover:text-primary transition-colors">
+        {t.footer.site}
+      </a>
+    </nav>
+  </div>
+</footer>
