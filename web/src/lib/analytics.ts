@@ -37,4 +37,10 @@ export const ANALYTICS_EVENTS = {
   ACTION_DEMO_START: 'action_demo_start',
   ACTION_DEMO_CLICK: 'action_demo_click',
   ACTION_DEMO_COMPLETE: 'action_demo_complete',
+  /* Phase 1 · Digital Employee 预置（方案 §三十二） */
+  DE_DEMO_START: 'digital_employee_demo_start',
+  DE_STEP_VIEW: 'digital_employee_step_view',
+  DE_TOOL_CALL: 'digital_employee_tool_call',
+  DE_ACTION: 'digital_employee_action',
+  DE_COMPLETE: 'digital_employee_complete',
 } as const;
