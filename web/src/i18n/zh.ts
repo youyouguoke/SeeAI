@@ -29,8 +29,9 @@ export const zh = {
     note: '确定性教学演示 · 不调用外部 LLM API',
     allConcepts: '所有概念',
     methodology: '方法论',
-    site: 'seeai.site',
-    language: '语言',
+    privacy: '隐私政策',
+    terms: '使用条款',
+    contact: '联系我们',
   },
   common: {
     minExperience: '分钟交互体验',

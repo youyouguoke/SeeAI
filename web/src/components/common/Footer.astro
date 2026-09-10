@@ -23,12 +23,14 @@ const year = new Date().getFullYear();
       <a href={`/${locale}/#philosophy`} class="hover:text-on transition-colors">
         {t.footer.methodology}
       </a>
-      <span class="hidden sm:flex items-center gap-1.5 text-label">
-        <span class="text-outline">{t.footer.language}:</span>
-        <span class="text-on font-medium">{locale === 'zh' ? '中文' : 'English'}</span>
-      </span>
-      <a href="https://seeai.site" class="text-on font-medium hover:text-primary transition-colors">
-        {t.footer.site}
+      <a href={`/${locale}/privacy/`} class="hover:text-on transition-colors">
+        {t.footer.privacy}
+      </a>
+      <a href={`/${locale}/terms/`} class="hover:text-on transition-colors">
+        {t.footer.terms}
+      </a>
+      <a href="mailto:hello@seeai.site" class="hover:text-on transition-colors">
+        {t.footer.contact}
       </a>
     </nav>
   </div>

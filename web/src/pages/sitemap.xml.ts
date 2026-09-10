@@ -9,6 +9,10 @@ export const GET: APIRoute = async ({ site }) => {
   const urls: { loc: string; alternates?: { lang: string; href: string }[] }[] = [
     { loc: `${base}/zh/` },
     { loc: `${base}/en/` },
+    { loc: `${base}/zh/privacy/` },
+    { loc: `${base}/en/privacy/` },
+    { loc: `${base}/zh/terms/` },
+    { loc: `${base}/en/terms/` },
     ...entries.map((e) => {
       const other = e.data.locale === 'zh' ? 'en' : 'zh';
       return {

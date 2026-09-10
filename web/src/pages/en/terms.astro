@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+/** Terms of Use (EN) — educational simulation disclaimer */
+---
+
+<BaseLayout
+  locale="en"
+  path="/en/terms"
+  title="Terms of Use | SeeAI"
+  description="SeeAI terms of use: all demos are deterministic pedagogical simulations; content is not professional advice."
+  alternatePath="/zh/terms"
+>
+  <main class="max-w-2xl mx-auto px-5 md:px-8 py-16">
+    <h1 class="font-headline text-headline text-on mb-8">Terms of Use</h1>
+    <div class="space-y-6 text-body text-on">
+      <section>
+        <h2 class="font-title text-title mb-2">Pedagogical simulation notice</h2>
+        <p class="text-secondary">All interactive demos on SeeAI are deterministic pedagogical simulations and make no calls to external LLM APIs. Companies, products, parts, suppliers, and figures shown are fictional and exist solely to illustrate concepts.</p>
+      </section>
+      <section>
+        <h2 class="font-title text-title mb-2">No professional advice</h2>
+        <p class="text-secondary">Content on this site is provided for AI concept education only and does not constitute legal, financial, procurement, or engineering advice. You bear full responsibility for any decisions made based on it.</p>
+      </section>
+      <section>
+        <h2 class="font-title text-title mb-2">Content accuracy</h2>
+        <p class="text-secondary">We strive for accuracy, but AI evolves quickly and conceptual framings may change. Content is provided "as is" without warranty of any kind.</p>
+      </section>
+      <section>
+        <h2 class="font-title text-title mb-2">Contact</h2>
+        <p class="text-secondary"><a href="mailto:hello@seeai.site" class="text-primary hover:underline">hello@seeai.site</a></p>
+      </section>
+      <p class="text-label text-outline pt-4 border-t border-surface-variant">Last updated: September 10, 2026</p>
+    </div>
+  </main>
+</BaseLayout>

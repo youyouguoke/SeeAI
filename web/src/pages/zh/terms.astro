@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+/** 使用条款（中文）— 教育演示免责声明 */
+---
+
+<BaseLayout
+  locale="zh"
+  path="/zh/terms"
+  title="使用条款 | SeeAI"
+  description="SeeAI 使用条款：所有演示为确定性教学模拟，内容不构成专业建议。"
+  alternatePath="/en/terms"
+>
+  <main class="max-w-2xl mx-auto px-5 md:px-8 py-16">
+    <h1 class="font-headline text-headline text-on mb-8">使用条款</h1>
+    <div class="space-y-6 text-body text-on">
+      <section>
+        <h2 class="font-title text-title mb-2">教学模拟声明</h2>
+        <p class="text-secondary">SeeAI 的所有交互演示均为确定性教学模拟，不调用外部大语言模型 API。演示中的企业、产品、零件、供应商与数字均为虚构，仅用于说明概念。</p>
+      </section>
+      <section>
+        <h2 class="font-title text-title mb-2">不构成专业建议</h2>
+        <p class="text-secondary">本站内容仅用于 AI 概念教育，不构成任何法律、财务、采购或工程决策建议。据此做出的任何决策，风险由使用者自行承担。</p>
+      </section>
+      <section>
+        <h2 class="font-title text-title mb-2">内容准确性</h2>
+        <p class="text-secondary">我们尽力保证内容准确，但 AI 领域发展快速，概念表述可能随技术演进调整。内容按"现状"提供，不附带任何明示或默示担保。</p>
+      </section>
+      <section>
+        <h2 class="font-title text-title mb-2">联系我们</h2>
+        <p class="text-secondary"><a href="mailto:hello@seeai.site" class="text-primary hover:underline">hello@seeai.site</a></p>
+      </section>
+      <p class="text-label text-outline pt-4 border-t border-surface-variant">最后更新：2026-09-10</p>
+    </div>
+  </main>
+</BaseLayout>

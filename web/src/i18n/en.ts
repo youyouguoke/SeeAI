@@ -31,8 +31,9 @@ export const en: UIStrings = {
     note: 'Deterministic pedagogical simulation · No external LLM API calls',
     allConcepts: 'All Concepts',
     methodology: 'Methodology',
-    site: 'seeai.site',
-    language: 'Language',
+    privacy: 'Privacy',
+    terms: 'Terms',
+    contact: 'Contact',
   },
   common: {
     minExperience: 'min interactive experience',

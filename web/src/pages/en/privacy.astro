@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+/** Privacy Policy (EN) — minimal, factual: no accounts, no personal data collection */
+---
+
+<BaseLayout
+  locale="en"
+  path="/en/privacy"
+  title="Privacy Policy | SeeAI"
+  description="SeeAI privacy policy: we collect no personal data and use no cookies."
+  alternatePath="/zh/privacy"
+>
+  <main class="max-w-2xl mx-auto px-5 md:px-8 py-16">
+    <h1 class="font-headline text-headline text-on mb-8">Privacy Policy</h1>
+    <div class="space-y-6 text-body text-on">
+      <section>
+        <h2 class="font-title text-title mb-2">What we do not collect</h2>
+        <p class="text-secondary">SeeAI has no account system, collects no personal information beyond standard server logs, uses no cookies for tracking, and embeds no third-party advertising pixels.</p>
+      </section>
+      <section>
+        <h2 class="font-title text-title mb-2">What we do collect</h2>
+        <p class="text-secondary">To understand content usage we may use Cloudflare Web Analytics, a privacy-friendly measurement tool (aggregate metrics such as page views and country of origin). It collects no personally identifiable data and uses no cookies.</p>
+      </section>
+      <section>
+        <h2 class="font-title text-title mb-2">Contact</h2>
+        <p class="text-secondary">Privacy questions: <a href="mailto:hello@seeai.site" class="text-primary hover:underline">hello@seeai.site</a>.</p>
+      </section>
+      <p class="text-label text-outline pt-4 border-t border-surface-variant">Last updated: September 10, 2026</p>
+    </div>
+  </main>
+</BaseLayout>

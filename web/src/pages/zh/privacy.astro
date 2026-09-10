@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+/** 隐私政策（中文）— 极简如实版：无账号、无个人数据收集 */
+---
+
+<BaseLayout
+  locale="zh"
+  path="/zh/privacy"
+  title="隐私政策 | SeeAI"
+  description="SeeAI 隐私政策：我们不收集个人数据，不使用 Cookie，无账号体系。"
+  alternatePath="/en/privacy"
+>
+  <main class="max-w-2xl mx-auto px-5 md:px-8 py-16">
+    <h1 class="font-headline text-headline text-on mb-8">隐私政策</h1>
+    <div class="space-y-6 text-body text-on">
+      <section>
+        <h2 class="font-title text-title mb-2">我们不收集什么</h2>
+        <p class="text-secondary">SeeAI 没有账号体系，不收集姓名、邮箱、IP 以外的任何个人信息，不使用 Cookie 追踪个人行为，不接第三方广告像素。</p>
+      </section>
+      <section>
+        <h2 class="font-title text-title mb-2">我们收集什么</h2>
+        <p class="text-secondary">为理解内容使用情况，我们可能使用 Cloudflare Web Analytics 进行隐私友好的访问统计（页面浏览量、来源国家等聚合指标）。该服务不收集可识别个人的数据，不使用 Cookie。</p>
+      </section>
+      <section>
+        <h2 class="font-title text-title mb-2">联系我们</h2>
+        <p class="text-secondary">隐私相关问题请邮件 <a href="mailto:hello@seeai.site" class="text-primary hover:underline">hello@seeai.site</a>。</p>
+      </section>
+      <p class="text-label text-outline pt-4 border-t border-surface-variant">最后更新：2026-09-10</p>
+    </div>
+  </main>
+</BaseLayout>
