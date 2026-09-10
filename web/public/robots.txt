@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# / 为语言自动跳转页（noindex），不进入索引
+Sitemap: https://seeai.site/sitemap.xml

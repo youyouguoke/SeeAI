@@ -7,6 +7,9 @@
 ## 结构
 
 - `web/` — Astro 5 + TypeScript strict + Tailwind CSS v4 + MDX Content Collections，静态导出，Cloudflare Pages 托管
+- `web/src/engine/` — **Concept Learning Engine**：概念无关的教学骨架（ConceptPage 组装器 + Demo 插件注册表 DemoSlot + 7 个通用教学组件 + `types.ts` 契约）
+- `web/src/concepts/<slug>/` — 每个概念的 ConceptSpec（zh/en 内容模块，TS 编译器强制互锁）+ 概念专属 Demo 类型与数据
+- `docs/adding-a-concept.md` — **新增概念操作手册**（新增概念 = ConceptSpec + MDX + 可选 Demo 插件，零骨架改动）
 - `01 SeeAI PRD.md` / `02 SeeAI MVP 技术设计 + Kimi Code 开发任务书.md` / `03 SeeAI MVP UIUX Design Specification v1.0.md` — 产品/技术/UIUX 定义文档
 - stitch 设计包（本地资产，未入库）— UI 真源为 `editorial_intelligence/DESIGN.md`
 
@@ -14,9 +17,11 @@
 
 | 路径 | 说明 |
 | --- | --- |
-| `/` | Language Gateway（noindex，不自动跳转） |
+| `/` | 语言自动跳转（noindex） |
 | `/zh/` `/en/` | 双语首页 |
-| `/zh/ontology/` `/en/ontology/` | 概念 01：本体论（核心交互页） |
+| `/zh/ontology/` `/en/ontology/` | 概念 01：本体论（Core Demo + Action Demo + 四分构件） |
+| `/sitemap.xml` | SEO sitemap（双语首页 + 已发布概念，hreflang 互链） |
+| `/robots.txt` | 允许全站 + Sitemap 声明 |
 
 ## 开发
 

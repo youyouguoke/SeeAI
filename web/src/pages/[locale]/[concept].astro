@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import ConceptPage from '../../engine/ConceptPage.astro';
+
+/**
+ * 概念路由 —— /zh/<concept> /en/<concept>。
+ * 所有概念共用 ConceptPage 教学骨架；新增概念无需改本文件。
+ */
+export async function getStaticPaths() {
+  const entries = await getCollection('concepts', (e) => !e.data.draft);
+  return entries.map((e) => ({
+    params: { locale: e.data.locale, concept: e.data.slug },
+  }));
+}
+
+const { locale, concept } = Astro.params;
+---
+
+<ConceptPage locale={locale!} concept={concept!} />

@@ -1,5 +1,5 @@
 ---
-import type { FurtherLearningContent } from '../../data/concepts/ontology.types';
+import type { FurtherBlock } from '../types';
 
 interface NextConcept {
   label: string;
@@ -10,7 +10,7 @@ interface NextConcept {
 }
 
 interface Props {
-  f: FurtherLearningContent;
+  f: FurtherBlock;
   next: NextConcept;
   locale: 'zh' | 'en';
 }

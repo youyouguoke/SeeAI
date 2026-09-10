@@ -1,5 +1,5 @@
 ---
-import type { WorkbenchContent } from '../../data/concepts/ontology.types';
+import type { WorkbenchContent } from '../../../concepts/ontology/types';
 
 export interface ChainNode {
   type: string;
@@ -250,7 +250,7 @@ const toneClass = {
 </section>
 
 <script>
-  import { track, ANALYTICS_EVENTS } from '../../lib/analytics';
+  import { track, ANALYTICS_EVENTS } from '../../../lib/analytics';
 
   const root = document.getElementById('workbench');
   if (root) {

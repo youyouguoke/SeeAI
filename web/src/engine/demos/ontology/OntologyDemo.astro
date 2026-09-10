@@ -1,0 +1,32 @@
+---
+import type { ConceptSpec, Locale } from '../../types';
+import type { OntologyDemoPayload } from '../../../concepts/ontology/types';
+import Workbench, { type ChainNode } from './Workbench.astro';
+import ActionDemo from './ActionDemo';
+import demo from '../../../concepts/ontology/demo-data.json';
+
+/**
+ * Ontology Demo 插件 —— Core Demo（4 态关系工作台）+ Action Demo（PENDING→APPROVED）。
+ * 数据全部来自 ConceptSpec.demo.payload 与 demo-data.json，组件零文案。
+ */
+interface Props {
+  spec: ConceptSpec;
+  locale: Locale;
+}
+
+const { spec, locale } = Astro.props;
+const payload = spec.demo.payload as OntologyDemoPayload;
+
+const labelKey = locale === 'zh' ? 'label_zh' : 'label_en';
+const relKey = locale === 'zh' ? 'rel_zh' : 'rel_en';
+const chainNodes: ChainNode[] = demo.nodes.map((n) => ({
+  type: n.type,
+  label: n[labelKey],
+  code: n.code,
+  highlight: n.type === 'Property',
+}));
+const chainRels: string[] = demo.edges.map((e) => e[relKey]);
+---
+
+<Workbench w={payload.workbench} chainNodes={chainNodes} chainRels={chainRels} />
+<ActionDemo a={payload.action} locale={locale} client:load />

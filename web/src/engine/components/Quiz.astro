@@ -1,18 +1,8 @@
 ---
-interface QuizData {
-  eyebrow: string;
-  badge: string;
-  scenario: string;
-  question: string;
-  options: string[];
-  answer_index: number;
-  feedbacks: string[];
-  correct_title: string;
-  wrong_title: string;
-}
+import type { QuizSpec } from '../types';
 
 interface Props {
-  q: QuizData;
+  q: QuizSpec;
 }
 
 const { q } = Astro.props;

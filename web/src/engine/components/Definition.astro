@@ -1,0 +1,141 @@
+---
+import type { DefinitionBlock } from '../types';
+
+interface Props {
+  d: DefinitionBlock;
+}
+
+const { d } = Astro.props;
+---
+
+<section class="max-w-content mx-auto px-5 md:px-8 py-8 border-t border-surface-variant" id="definition">
+  <p class="font-label text-label text-primary font-semibold tracking-wider">{d.eyebrow}</p>
+  <h2 class="font-headline text-headline text-on mt-2 mb-6">{d.title}</h2>
+
+  <blockquote class="max-w-3xl border-l-2 border-primary pl-5 py-1 mb-8">
+    <p class="font-headline text-headline text-on leading-snug">{d.quote}</p>
+  </blockquote>
+
+  <div class="grid md:grid-cols-2 gap-4 mb-10">
+    <div
+      class:list={[
+        'rounded-xl border p-6',
+        d.compare.a.emphasized ? 'bg-surface-container border-primary-container' : 'bg-surface border-surface-variant',
+      ]}
+    >
+      <div class="flex items-center gap-2 mb-2">
+        <span
+          class:list={['material-symbols-outlined text-[1.1rem]', d.compare.a.emphasized ? 'text-primary' : 'text-secondary']}
+          aria-hidden="true"
+        >
+          {d.compare.a.icon}
+        </span>
+        <h3 class:list={['font-title text-title', d.compare.a.emphasized ? 'text-primary-deep' : 'text-on']}>
+          {d.compare.a.label}
+        </h3>
+      </div>
+      <p class:list={['text-body', d.compare.a.emphasized ? 'text-on' : 'text-secondary']}>{d.compare.a.body}</p>
+    </div>
+    <div
+      class:list={[
+        'rounded-xl border p-6',
+        d.compare.b.emphasized ? 'bg-surface-container border-primary-container' : 'bg-surface border-surface-variant',
+      ]}
+    >
+      <div class="flex items-center gap-2 mb-2">
+        <span
+          class:list={['material-symbols-outlined text-[1.1rem]', d.compare.b.emphasized ? 'text-primary' : 'text-secondary']}
+          aria-hidden="true"
+        >
+          {d.compare.b.icon}
+        </span>
+        <h3 class:list={['font-title text-title', d.compare.b.emphasized ? 'text-primary-deep' : 'text-on']}>
+          {d.compare.b.label}
+        </h3>
+      </div>
+      <p class:list={['text-body', d.compare.b.emphasized ? 'text-on' : 'text-secondary']}>{d.compare.b.body}</p>
+    </div>
+  </div>
+
+  <p class="font-title text-title text-on font-semibold mb-5">{d.components_label}</p>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    {
+      d.components.map((c) => (
+        <div
+          class:list={[
+            'bg-surface rounded-xl border p-5',
+            c.layer === 'dynamic' ? 'border-primary-container' : 'border-surface-variant',
+          ]}
+        >
+          <div class="flex items-center justify-between">
+            <span
+              class:list={[
+                'w-9 h-9 rounded-lg flex items-center justify-center',
+                c.layer === 'dynamic' ? 'bg-primary-container text-primary-deep' : 'bg-surface-container text-primary',
+              ]}
+            >
+              <span class="material-symbols-outlined text-[1.2rem]" aria-hidden="true">
+                {c.icon}
+              </span>
+            </span>
+            <span class="text-label text-outline">{c.index}</span>
+          </div>
+          <h3 class="font-title text-title text-on font-semibold mt-3">{c.name}</h3>
+          <p class="font-label text-label text-primary font-mono mt-1">{c.role}</p>
+          <p class="text-body text-on mt-2.5">{c.body}</p>
+          <p class="text-label text-secondary mt-3 pt-3 border-t border-surface-variant">
+            e.g. {c.example}
+          </p>
+        </div>
+      ))
+    }
+  </div>
+
+  {
+    d.contrast && (
+      <div class="mt-8 bg-surface-container rounded-xl border border-surface-variant p-6 md:p-7">
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="bg-surface rounded-lg border border-surface-variant p-5">
+            <p class="font-label text-label font-bold text-secondary">{d.contrast.left.label}</p>
+            <p class="font-label text-label text-secondary mt-0.5">{d.contrast.left.role}</p>
+            <div class="mt-4 flex items-center gap-2 flex-wrap text-body">
+              <span class="font-semibold text-on">{d.contrast.left.from}</span>
+              <span class="text-label font-semibold text-accent bg-surface-container px-2 py-0.5 rounded">
+                {d.contrast.left.verb}
+              </span>
+              <span class="font-semibold text-on">{d.contrast.left.to}</span>
+            </div>
+          </div>
+          <div
+            class:list={[
+              'bg-surface rounded-lg border p-5',
+              d.contrast.right.highlight ? 'border-primary-container' : 'border-surface-variant',
+            ]}
+          >
+            <p class="font-label text-label font-bold text-primary">{d.contrast.right.label}</p>
+            <p class="font-label text-label text-secondary mt-0.5">{d.contrast.right.role}</p>
+            <div class="mt-4 flex items-center gap-2 flex-wrap text-body">
+              <span class="font-semibold text-on">{d.contrast.right.from}</span>
+              <span
+                class:list={[
+                  'text-label font-semibold px-2 py-0.5 rounded',
+                  d.contrast.right.highlight
+                    ? 'bg-primary-container text-primary-deep'
+                    : 'bg-surface-container text-accent',
+                ]}
+              >
+                {d.contrast.right.verb}
+              </span>
+              <span class:list={['font-semibold', d.contrast.right.highlight ? 'text-primary' : 'text-on']}>
+                {d.contrast.right.to}
+              </span>
+            </div>
+          </div>
+        </div>
+        <p class="mt-5 pt-4 border-t border-surface-variant text-body text-on font-medium text-center">
+          {d.contrast.summary}
+        </p>
+      </div>
+    )
+  }
+</section>

@@ -1,0 +1,73 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import type { ConceptSpec, Locale } from './types';
+import type { Locale as UiLocale } from '../i18n/index';
+import ConceptHero from './components/ConceptHero.astro';
+import DemoSlot from './DemoSlot.astro';
+import IdeaSection from './components/IdeaSection.astro';
+import Definition from './components/Definition.astro';
+import Scenario from './components/Scenario.astro';
+import Misconceptions from './components/Misconceptions.astro';
+import Quiz from './components/Quiz.astro';
+import FurtherLearning from './components/FurtherLearning.astro';
+
+/**
+ * ConceptPage —— Concept Learning Engine 的教学骨架（怎么教）。
+ * 认知叙事顺序：Hero → Demo（插件）→ Mental Model → Deep Dive(Definition) →
+ *               Scenario → Misconceptions → Quiz → Further Learning
+ * 教什么全部来自：MDX frontmatter（meta/quiz）+ ConceptSpec（内容模块）+ MDX 正文（散文）。
+ */
+
+const modules = import.meta.glob('../concepts/*/content.*.ts', { eager: true }) as Record<
+  string,
+  { spec: ConceptSpec }
+>;
+
+interface Props {
+  locale: string;
+  concept: string;
+}
+
+const { locale: localeParam, concept } = Astro.props;
+const locale: Locale = localeParam === 'en' ? 'en' : 'zh';
+const other: Locale = locale === 'zh' ? 'en' : 'zh';
+
+const entry = await getEntry('concepts', `${locale}/${concept}`);
+if (!entry) throw new Error(`[engine] MDX not found: ${locale}/${concept}`);
+const { Content } = await render(entry);
+const fm = entry.data;
+
+const mod = modules[`../concepts/${fm.slug}/content.${locale}.ts`];
+if (!mod) throw new Error(`[engine] ConceptSpec not found: ${fm.slug}/content.${locale}.ts`);
+const spec = mod.spec;
+---
+
+<BaseLayout
+  locale={locale as UiLocale}
+  path={`/${locale}/${fm.slug}`}
+  title={`${fm.title} | SeeAI`}
+  description={fm.summary}
+  alternatePath={`/${other}/${fm.slug}`}
+>
+  <ConceptHero
+    conceptLabel={fm.concept_label}
+    title={fm.title}
+    teaser={fm.teaser}
+    teaserEmphasis={fm.teaser_emphasis}
+    meta={fm.hero_meta.map((text, i) => ({ icon: ['schedule', 'precision_manufacturing', 'verified'][i], text }))}
+    langSwitch={{ href: `/${other}/${fm.slug}`, label: spec.further.lang_switch }}
+  />
+
+  <DemoSlot spec={spec} locale={locale} />
+
+  <IdeaSection idea={spec.idea}>
+    <Content />
+  </IdeaSection>
+
+  <Definition d={spec.definition} />
+  <Scenario s={spec.scenario} />
+  <Misconceptions m={spec.misconceptions} />
+  <Quiz q={fm.quiz} />
+  <FurtherLearning f={spec.further} next={fm.next_concept} locale={locale} />
+</BaseLayout>

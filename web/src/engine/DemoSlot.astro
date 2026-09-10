@@ -1,0 +1,24 @@
+---
+import type { ConceptSpec, Locale } from './types';
+import OntologyDemo from './demos/ontology/OntologyDemo.astro';
+
+/**
+ * Demo 插件注册表 —— Engine 的唯一扩展点。
+ * 新增概念若核心交互无法由通用骨架表达，在此注册一个插件组件（接收 { spec, locale }）。
+ */
+interface Props {
+  spec: ConceptSpec;
+  locale: Locale;
+}
+
+const { spec, locale } = Astro.props;
+
+const registry: Record<string, any> = {
+  ontology: OntologyDemo,
+};
+
+const Demo = registry[spec.demo.type];
+if (!Demo) throw new Error(`[engine] Demo plugin not registered: "${spec.demo.type}"`);
+---
+
+<Demo spec={spec} locale={locale} />

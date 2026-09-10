@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import type { ActionDemoContent } from '../../data/concepts/ontology.types';
-import { track, ANALYTICS_EVENTS } from '../../lib/analytics';
+import type { ActionDemoContent } from '../../../concepts/ontology/types';
+import { track, ANALYTICS_EVENTS } from '../../../lib/analytics';
 
 type ActionState = 'PENDING' | 'APPROVED';
 
