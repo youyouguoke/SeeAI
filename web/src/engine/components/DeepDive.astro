@@ -1,0 +1,59 @@
+---
+import type { DeepDiveBlock } from '../types';
+
+interface Props {
+  d: DeepDiveBlock;
+}
+
+const { d } = Astro.props;
+
+const toneIcon: Record<string, string> = { allow: 'check', deny: 'close', pending: 'pending' };
+const toneColor: Record<string, string> = {
+  allow: 'text-primary',
+  deny: 'text-error',
+  pending: 'text-secondary',
+};
+---
+
+<section class="max-w-content mx-auto px-5 md:px-8 py-8 border-t border-surface-variant" id="deepdive">
+  <p class="font-label text-label text-primary font-semibold tracking-wider">{d.eyebrow}</p>
+  <h2 class="font-headline text-headline text-on mt-2">{d.title}</h2>
+
+  <!-- 大号定义卡 -->
+  <div class="mt-6 rounded-xl border border-primary-container bg-surface-container p-6 md:p-8 max-w-3xl">
+    <p class="font-headline text-headline text-primary-deep leading-snug">{d.definition}</p>
+    <p class="mt-4 pt-4 border-t border-surface-variant text-body text-secondary">{d.definition_note}</p>
+  </div>
+
+  <!-- Role / Access / Action / Governance 模型卡 -->
+  <div class="grid md:grid-cols-2 gap-4 mt-8">
+    {
+      d.cards.map((c) => (
+        <div class="bg-surface rounded-xl border border-surface-variant p-6 flex flex-col">
+          <h3 class="font-title text-title text-on font-semibold">{c.title}</h3>
+          <p class="font-label text-label text-primary font-medium mt-1 mb-2.5">{c.question}</p>
+          <p class="text-body text-secondary">{c.body}</p>
+          {c.lists && (
+            <div class="mt-4 pt-4 border-t border-surface-variant space-y-4">
+              {c.lists.map((l) => (
+                <div>
+                  <p class="font-label text-label font-semibold text-secondary mb-1.5">{l.label}</p>
+                  <ul class="space-y-1">
+                    {l.items.map((i) => (
+                      <li class:list={['flex items-center gap-2 text-body', toneColor[l.tone]]}>
+                        <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">{toneIcon[l.tone]}</span>
+                        {i}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))
+    }
+  </div>
+
+  <p class="mt-6 text-body text-on font-medium max-w-3xl">{d.governance_conclusion}</p>
+</section>

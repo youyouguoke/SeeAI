@@ -1,0 +1,42 @@
+---
+import type { FlowModelBlock } from '../types';
+
+interface Props {
+  f: FlowModelBlock;
+  id?: string;
+}
+
+const { f, id } = Astro.props;
+---
+
+<section class="max-w-content mx-auto px-5 md:px-8 py-8 border-t border-surface-variant" id={id}>
+  {
+    f.eyebrow && (
+      <p class="font-label text-label text-primary font-semibold tracking-wider">{f.eyebrow}</p>
+    )
+  }
+  {f.title && <h2 class="font-headline text-headline text-on mt-2 mb-6">{f.title}</h2>}
+
+  <div class="max-w-md">
+    {
+      f.steps.map((s, i) => (
+        <>
+          <div class="rounded-lg border border-surface-variant bg-surface px-4 py-3 text-center">
+            <p class="text-body text-on font-medium">{s}</p>
+          </div>
+          {i < f.steps.length - 1 && (
+            <div class="flex justify-center py-1" aria-hidden="true">
+              <span class="material-symbols-outlined text-outline text-[1.1rem]">arrow_downward</span>
+            </div>
+          )}
+        </>
+      ))
+    }
+  </div>
+
+  {
+    f.conclusion && (
+      <p class="mt-6 text-body text-on font-semibold max-w-3xl">{f.conclusion}</p>
+    )
+  }
+</section>

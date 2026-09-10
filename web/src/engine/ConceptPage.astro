@@ -5,23 +5,29 @@ import type { ConceptSpec, Locale } from './types';
 import type { Locale as UiLocale } from '../i18n/index';
 import ConceptHero from './components/ConceptHero.astro';
 import DemoSlot from './DemoSlot.astro';
+import ProblemSection from './components/ProblemSection.astro';
 import IdeaSection from './components/IdeaSection.astro';
+import FlowModel from './components/FlowModel.astro';
 import Definition from './components/Definition.astro';
+import DeepDive from './components/DeepDive.astro';
+import VsTable from './components/VsTable.astro';
 import EnterprisePlatform from './components/EnterprisePlatform.astro';
 import Scenario from './components/Scenario.astro';
 import CaseStudy from './components/CaseStudy.astro';
 import ScenarioGallery from './components/ScenarioGallery.astro';
+import Connection from './components/Connection.astro';
 import Misconceptions from './components/Misconceptions.astro';
 import Quiz from './components/Quiz.astro';
 import FurtherLearning from './components/FurtherLearning.astro';
 
 /**
  * ConceptPage —— Concept Learning Engine 的教学骨架（怎么教）。
- * 认知叙事：Hero(锚点导航) → Demo（插件）→ Mental Model → Definition →
- *          Enterprise?(可选) → Scenario → CaseStudy?(可选) → Gallery?(可选)
- *          → Critical(Misconceptions,可选 cost) → Quiz → Further Learning
- * 教什么全部来自：MDX frontmatter（meta/quiz）+ ConceptSpec（内容模块）+ MDX 正文（散文）。
- * 可选区块概念不写就不渲染——Engine 不强迫每个概念套用全部结构。
+ * 认知叙事：Hero(锚点导航) → Problem?(Without X) → Demo（插件）→ Mental Model? →
+ *          Definition?/Deep Dive? → Comparison? → Enterprise? → Scenario →
+ *          Case Study?/Gallery? → Connection? → Critical Thinking → Quiz →
+ *          Final Model? → Further Learning
+ * 所有区块均可选——概念不写就不渲染；Engine 不强迫每个概念套用全部结构。
+ * 教什么全部来自：MDX frontmatter（meta/quiz）+ ConceptSpec（内容模块）+ MDX 正文。
  */
 
 const modules = import.meta.glob('../concepts/*/content.*.ts', { eager: true }) as Record<
@@ -64,23 +70,43 @@ const spec = mod.spec;
     nav={spec.nav}
   />
 
+  {spec.problem && <ProblemSection p={spec.problem} />}
+
   <DemoSlot spec={spec} locale={locale} />
 
-  <IdeaSection idea={spec.idea}>
-    <Content />
-  </IdeaSection>
+  {
+    spec.idea ? (
+      <IdeaSection idea={spec.idea}>
+        <Content />
+      </IdeaSection>
+    ) : (
+      /* 概念未定义 idea 区块时，MDX 散文以纯文本流渲染 */
+      <section class="max-w-content mx-auto px-5 md:px-8 py-8">
+        <div class="max-w-2xl text-body text-on [&>p]:mb-4 [&>p:last-child]:mb-0">
+          <Content />
+        </div>
+      </section>
+    )
+  }
 
-  <Definition d={spec.definition} />
+  {spec.mentalModel && <FlowModel f={spec.mentalModel} id="mental" />}
+
+  {spec.definition && <Definition d={spec.definition} />}
+  {spec.deepDive && <DeepDive d={spec.deepDive} />}
+  {spec.comparison && <VsTable v={spec.comparison} />}
 
   {spec.enterprise && <EnterprisePlatform e={spec.enterprise} />}
 
   <Scenario s={spec.scenario} />
 
   {spec.caseStudy && <CaseStudy c={spec.caseStudy} />}
-
   {spec.gallery && <ScenarioGallery g={spec.gallery} />}
+  {spec.connection && <Connection c={spec.connection} />}
 
   <Misconceptions m={spec.misconceptions} />
   <Quiz q={fm.quiz} />
-  <FurtherLearning f={spec.further} next={fm.next_concept} locale={locale} />
+
+  {spec.finalModel && <FlowModel f={spec.finalModel} id="final" />}
+
+  <FurtherLearning f={spec.further} next={fm.next_concept} prev={fm.prev_concept} locale={locale} />
 </BaseLayout>

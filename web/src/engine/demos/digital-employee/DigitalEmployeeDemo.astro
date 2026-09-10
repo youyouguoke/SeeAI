@@ -1,0 +1,13 @@
+---
+import DeDemo from './DigitalEmployeeDemo';
+import type { ConceptSpec, Locale } from '../../types';
+
+interface Props {
+  spec: ConceptSpec;
+  locale: Locale;
+}
+
+const { spec, locale } = Astro.props;
+---
+
+<DeDemo spec={spec} locale={locale} client:load />

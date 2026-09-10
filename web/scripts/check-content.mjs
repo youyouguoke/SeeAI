@@ -82,13 +82,13 @@ for (const slug of conceptDirs) {
   if (zhSpec.demo?.type !== enSpec.demo?.type) fail(`${slug}: demo.type 不一致`);
   if (JSON.stringify(keys(zhSpec.definition ?? {})) !== JSON.stringify(keys(enSpec.definition ?? {})))
     fail(`${slug}: definition 键不一致`);
-  if ((zhSpec.definition?.components?.length ?? -1) !== (enSpec.definition?.components?.length ?? -2))
+  if ((zhSpec.definition?.components?.length ?? -1) !== (enSpec.definition?.components?.length ?? -1))
     fail(`${slug}: definition.components 数量不一致`);
-  if ((zhSpec.scenario?.levels?.length ?? -1) !== (enSpec.scenario?.levels?.length ?? -2))
+  if ((zhSpec.scenario?.levels?.length ?? -1) !== (enSpec.scenario?.levels?.length ?? -1))
     fail(`${slug}: scenario.levels 数量不一致`);
-  if ((zhSpec.misconceptions?.items?.length ?? -1) !== (enSpec.misconceptions?.items?.length ?? -2))
+  if ((zhSpec.misconceptions?.items?.length ?? -1) !== (enSpec.misconceptions?.items?.length ?? -1))
     fail(`${slug}: misconceptions.items 数量不一致`);
-  if ((zhSpec.idea?.questions?.length ?? -1) !== (enSpec.idea?.questions?.length ?? -2))
+  if ((zhSpec.idea?.questions?.length ?? -1) !== (enSpec.idea?.questions?.length ?? -1))
     fail(`${slug}: idea.questions 数量不一致`);
   ok(`${slug}: spec 双语一致`);
 }

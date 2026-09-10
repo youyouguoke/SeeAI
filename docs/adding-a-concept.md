@@ -45,8 +45,13 @@ export const spec: ConceptSpec = {
   id: '<slug>',
   demo: { type: '<slug>' /* 或复用已注册插件 */, payload: { /* 插件数据，插件内 narrow */ } },
   nav?: [{ id, label }],              // 页内锚点导航（可选）
-  idea:        { label, title, questions[] },
-  definition:  { eyebrow, title, quote, compare{a,b}, components_label, components[], contrast? },
+  idea?:       { label, title, questions[] },   // 可选；缺省时 MDX 散文以纯文本流渲染
+  definition?: { eyebrow, title, quote, compare{a,b}, components_label, components[], contrast? },  // 可选
+  problem?:    { strip?, eyebrow, title, event, human, note, steps[], chatbot?, why? },  // 可选：Problem/Without 叙事（ProblemSection）
+  deepDive?:   { eyebrow, title, definition, definition_note, cards[], governance_conclusion },  // 可选：定义+Role/Access/Action/Governance 卡片（DeepDive）
+  comparison?: { title, left_label, right_label, rows[], footnote },  // 可选：横向对比表（VsTable）
+  connection?: { eyebrow, prev, current, chain[], statement },       // 可选：概念连接（Connection）
+  mentalModel?: / finalModel?: { eyebrow?, title?, steps[], conclusion? },  // 可选：流程心智模型（FlowModel）
   enterprise?: { ... },               // Part 2 企业语义平台（可选，EnterprisePlatform 组件）
   caseStudy?:  { ... },               // Part 4 商业案例研究（可选，CaseStudy 组件）
   gallery?:    { ... },               // Part 5 场景集（可选，ScenarioGallery 组件，带证据等级）

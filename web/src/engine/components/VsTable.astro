@@ -1,0 +1,30 @@
+---
+import type { VsTableBlock } from '../types';
+
+interface Props {
+  v: VsTableBlock;
+}
+
+const { v } = Astro.props;
+---
+
+<section class="max-w-content mx-auto px-5 md:px-8 py-8 border-t border-surface-variant" id="vs">
+  <h2 class="font-headline text-headline text-on mb-6">{v.title}</h2>
+
+  <div class="rounded-xl border border-surface-variant overflow-hidden max-w-3xl">
+    <div class="grid grid-cols-2 bg-surface-container border-b border-surface-variant">
+      <p class="px-5 py-3 font-mono text-label font-bold text-secondary">{v.left_label}</p>
+      <p class="px-5 py-3 font-mono text-label font-bold text-primary">{v.right_label}</p>
+    </div>
+    {
+      v.rows.map((r, i) => (
+        <div class:list={['grid grid-cols-2', i < v.rows.length - 1 && 'border-b border-surface-variant']}>
+          <p class="px-5 py-3.5 text-body text-secondary bg-surface">{r.left}</p>
+          <p class="px-5 py-3.5 text-body text-on bg-surface-container/60 font-medium">{r.right}</p>
+        </div>
+      ))
+    }
+  </div>
+
+  <p class="mt-4 text-label text-secondary max-w-3xl">{v.footnote}</p>
+</section>

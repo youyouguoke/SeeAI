@@ -1,0 +1,50 @@
+---
+import type { ConnectionBlock } from '../types';
+
+interface Props {
+  c: ConnectionBlock;
+}
+
+const { c } = Astro.props;
+---
+
+<section class="max-w-content mx-auto px-5 md:px-8 py-8 border-t border-surface-variant" id="connection">
+  <p class="font-label text-label text-primary font-semibold tracking-wider">{c.eyebrow}</p>
+
+  <div class="grid md:grid-cols-[1fr_auto_1fr] gap-4 items-center mt-6 max-w-3xl">
+    <div class="rounded-xl border border-surface-variant bg-surface p-6">
+      <p class="font-mono text-label text-secondary font-bold">{c.prev.label}</p>
+      <ul class="mt-2.5 space-y-1.5">
+        {c.prev.points.map((p) => (
+          <li class="text-body text-secondary">{p}</li>
+        ))}
+      </ul>
+    </div>
+    <span class="material-symbols-outlined text-primary text-[1.4rem] justify-self-center rotate-90 md:rotate-0" aria-hidden="true">arrow_forward</span>
+    <div class="rounded-xl border border-primary-container bg-surface-container p-6">
+      <p class="font-mono text-label text-primary font-bold">{c.current.label}</p>
+      <ul class="mt-2.5 space-y-1.5">
+        {c.current.points.map((p) => (
+          <li class="text-body text-on">{p}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-2 mt-6 max-w-3xl">
+    {
+      c.chain.map((s, i) => (
+        <>
+          <span class="px-3 py-1.5 rounded-full bg-surface border border-surface-variant text-label text-on font-medium">{s}</span>
+          {i < c.chain.length - 1 && (
+            <span class="material-symbols-outlined text-outline text-[0.95rem]" aria-hidden="true">arrow_downward</span>
+          )}
+        </>
+      ))
+    }
+  </div>
+
+  <div class="mt-6 rounded-xl border border-primary-container bg-surface-container p-6 md:p-7 max-w-3xl">
+    <p class="font-headline text-headline text-primary-deep leading-snug">{c.statement}</p>
+  </div>
+</section>

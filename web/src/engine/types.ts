@@ -197,15 +197,87 @@ export interface ConceptSpec {
   demo: DemoDefinition;
   /** 页内锚点导航（可选） */
   nav?: NavItem[];
-  idea: IdeaBlock;
-  definition: DefinitionBlock;
+  /** Problem/Without 叙事（可选：事件卡 + 人工时间线 + Chatbot 局限 + Why） */
+  problem?: ProblemBlock;
+  idea?: IdeaBlock;
+  definition?: DefinitionBlock;
   /** Part 2 企业语义平台（可选） */
   enterprise?: EnterpriseBlock;
   /** Part 4 商业案例研究（可选） */
   caseStudy?: CaseStudyBlock;
   /** Part 5 企业场景集（可选） */
   gallery?: GalleryBlock;
+  /** Demo 后的心智模型流图（可选） */
+  mentalModel?: FlowModelBlock;
+  /** Deep Dive：定义卡 + Role/Access/Action/Governance 模型卡（可选） */
+  deepDive?: DeepDiveBlock;
+  /** 横向对比表（可选） */
+  comparison?: VsTableBlock;
   scenario: ScenarioBlock;
+  /** 概念连接（可选，Connections 的雏形） */
+  connection?: ConnectionBlock;
   misconceptions: MisconceptionsBlock;
+  /** 页面末尾的最终心智模型（可选） */
+  finalModel?: FlowModelBlock;
   further: FurtherBlock;
+}
+
+/* -------------------- Problem / Without X 叙事（可选区块） -------------------- */
+
+export interface ProblemBlock {
+  /** Hero 下方 "Answer ≠ Work" 轻视觉（可选） */
+  strip?: { left_label: string; left_flow: string[]; right_label: string; right_flow: string[]; punchline: string };
+  eyebrow: string;
+  title: string;
+  event: { time: string; title: string; detail: string };
+  human: { title: string; items: string[] };
+  note: string;
+  steps: { time: string; system: string; action: string; status: string }[];
+  chatbot?: { user: string; bot: string; conclusion: string };
+  why?: { columns: { label: string; items: string[] }[]; conclusion: string };
+}
+
+/* -------------------- Deep Dive：定义 + 模型卡（可选区块） -------------------- */
+
+export interface DeepDiveBlock {
+  eyebrow: string;
+  title: string;
+  definition: string;
+  definition_note: string;
+  cards: {
+    title: string;
+    question: string;
+    body: string;
+    lists?: { label: string; items: string[]; tone: 'allow' | 'deny' | 'pending' }[];
+  }[];
+  governance_conclusion: string;
+}
+
+/* -------------------- 横向对比表（可选区块） -------------------- */
+
+export interface VsTableBlock {
+  title: string;
+  left_label: string;
+  right_label: string;
+  rows: { left: string; right: string }[];
+  footnote: string;
+}
+
+/* -------------------- 心智模型流图（可选区块） -------------------- */
+
+export interface FlowModelBlock {
+  eyebrow?: string;
+  title?: string;
+  steps: string[];
+  conclusion?: string;
+}
+
+/* -------------------- 概念连接（可选区块，Connections 雏形） -------------------- */
+
+export interface ConnectionBlock {
+  eyebrow: string;
+  prev: { label: string; points: string[] };
+  current: { label: string; points: string[] };
+  chain: string[];
+  statement: string;
 }

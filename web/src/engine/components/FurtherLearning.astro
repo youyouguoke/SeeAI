@@ -1,60 +1,103 @@
 ---
 import type { FurtherBlock } from '../types';
 
-interface NextConcept {
+interface ConceptCard {
   label: string;
   title: string;
   description: string;
   read_minutes: number;
   preview_note: string;
+  /** 已上线概念给出 slug，卡片渲染为链接 */
+  slug?: string;
 }
 
 interface Props {
   f: FurtherBlock;
-  next: NextConcept;
+  next: ConceptCard;
+  prev?: ConceptCard;
   locale: 'zh' | 'en';
 }
 
-const { f, next, locale } = Astro.props;
+const { f, next, prev, locale } = Astro.props;
 const homePath = `/${locale}/`;
+
+const cardCls =
+  'block bg-surface rounded-xl border border-surface-variant p-6 relative transition-colors hover:border-primary-container';
+const badgeNeutral =
+  'px-2.5 py-0.5 rounded-full bg-surface-container text-secondary text-label border border-surface-variant font-semibold';
+const badgeHighlight = 'px-2.5 py-0.5 rounded-full bg-primary-container text-primary-deep text-label font-semibold';
+const badgeSoon = 'px-2.5 py-0.5 rounded-full bg-surface text-secondary text-label border border-outline-variant font-semibold';
 ---
 
 <section class="max-w-content mx-auto px-5 md:px-8 py-12 border-t border-surface-variant">
   <p class="font-label text-label text-secondary font-semibold tracking-wider">{f.eyebrow}</p>
-  <h2 class="font-headline text-headline text-on mt-2 mb-6">{next.title}</h2>
+  <h2 class="font-headline text-headline text-on mt-2 mb-6">
+    {prev ? 'Ontology × Digital Employee' : next.title}
+  </h2>
 
-  <div class="grid lg:grid-cols-[1fr_auto] gap-6 items-start max-w-4xl">
-    <div class="bg-surface rounded-xl border border-surface-variant p-6 relative">
-      <div class="flex items-center gap-2 mb-3">
-        <span class="px-2.5 py-0.5 rounded-full bg-surface-container text-secondary text-label border border-surface-variant font-semibold">
-          {next.label}
-        </span>
-        <span class="px-2.5 py-0.5 rounded-full bg-primary-container text-primary-deep text-label font-semibold">
-          {next.preview_note}
-        </span>
-      </div>
-      <p class="text-body text-on mb-4">{next.description}</p>
-      <p class="flex items-center gap-1.5 text-label text-secondary">
-        <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">timer</span>
-        {next.read_minutes} min · Vector Search &amp; Embeddings
-      </p>
-    </div>
+  <div class:list={['grid gap-4 items-start max-w-4xl', prev && 'lg:grid-cols-2']}>
+    {
+      prev && (
+        <a href={`/${locale}/${prev.slug}/`} class={cardCls}>
+          <div class="flex items-center gap-2 mb-3">
+            <span class={badgeNeutral}>{prev.label}</span>
+            <span class={badgeHighlight}>{prev.preview_note}</span>
+          </div>
+          <p class="text-body text-on font-medium mb-1.5">{prev.title}</p>
+          <p class="text-body text-secondary mb-4">{prev.description}</p>
+          <p class="flex items-center gap-1.5 text-label text-secondary">
+            <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">timer</span>
+            {prev.read_minutes} min
+          </p>
+        </a>
+      )
+    }
 
-    <div class="flex lg:flex-col gap-3">
-      <a
-        href="#workbench"
-        class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-surface text-on text-label font-medium border border-surface-variant hover:border-outline-variant transition-colors"
-      >
-        <span class="material-symbols-outlined text-[1.1rem]" aria-hidden="true">replay</span>
-        {f.review_label}
-      </a>
-      <a
-        href={homePath}
-        class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-surface text-on text-label font-medium border border-surface-variant hover:border-outline-variant transition-colors"
-      >
-        <span class="material-symbols-outlined text-[1.1rem]" aria-hidden="true">home</span>
-        {f.back_home}
-      </a>
-    </div>
+    {
+      next.slug ? (
+        <a href={`/${locale}/${next.slug}/`} class={cardCls}>
+          <div class="flex items-center gap-2 mb-3">
+            <span class={badgeNeutral}>{next.label}</span>
+            <span class={badgeHighlight}>{next.preview_note}</span>
+          </div>
+          <p class="text-body text-on font-medium mb-1.5">{next.title}</p>
+          <p class="text-body text-secondary mb-4">{next.description}</p>
+          <p class="flex items-center gap-1.5 text-label text-secondary">
+            <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">timer</span>
+            {next.read_minutes} min
+          </p>
+        </a>
+      ) : (
+        <div class={cardCls}>
+          <div class="flex items-center gap-2 mb-3">
+            <span class={badgeNeutral}>{next.label}</span>
+            <span class={badgeSoon}>{next.preview_note}</span>
+          </div>
+          <p class="text-body text-on font-medium mb-1.5">{next.title}</p>
+          <p class="text-body text-secondary mb-4">{next.description}</p>
+          <p class="flex items-center gap-1.5 text-label text-secondary">
+            <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">timer</span>
+            {next.read_minutes} min
+          </p>
+        </div>
+      )
+    }
+  </div>
+
+  <div class="flex gap-3 mt-6 max-w-4xl">
+    <a
+      href="#workbench"
+      class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-surface text-on text-label font-medium border border-surface-variant hover:border-outline-variant transition-colors"
+    >
+      <span class="material-symbols-outlined text-[1.1rem]" aria-hidden="true">replay</span>
+      {f.review_label}
+    </a>
+    <a
+      href={homePath}
+      class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-surface text-on text-label font-medium border border-surface-variant hover:border-outline-variant transition-colors"
+    >
+      <span class="material-symbols-outlined text-[1.1rem]" aria-hidden="true">home</span>
+      {f.back_home}
+    </a>
   </div>
 </section>
