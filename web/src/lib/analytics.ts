@@ -44,4 +44,10 @@ export const ANALYTICS_EVENTS = {
   DE_ACTION: 'digital_employee_action',
   DE_COMPLETE: 'digital_employee_complete',
   DE_APPROVAL: 'digital_employee_approval',
+  AGENT_DEMO_START: 'agent_demo_start',
+  AGENT_STEP_VIEW: 'agent_step_view',
+  AGENT_REPLAN_VIEW: 'agent_replan_view',
+  AGENT_ACTION: 'agent_action',
+  AGENT_APPROVAL: 'agent_approval',
+  AGENT_DEMO_COMPLETE: 'agent_demo_complete',
 } as const;

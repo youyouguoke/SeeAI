@@ -241,8 +241,9 @@ export const spec: ConceptSpec = {
     governance_conclusion: 'A digital employee earns its place in the enterprise not because it "can do things", but because its behavior has boundaries.',
   },
 
-  comparison: {
-    title: 'Chatbot vs Digital Employee',
+  comparisons: [
+    {
+      title: 'Chatbot vs Digital Employee',
     left_label: 'CHATBOT',
     right_label: 'DIGITAL EMPLOYEE',
     rows: [
@@ -253,8 +254,9 @@ export const spec: ConceptSpec = {
       { left: 'Typically limited action scope', right: 'Governed action scope' },
       { left: 'No explicit enterprise work responsibility', right: 'Defined business role and responsibility' },
     ],
-    footnote: 'This does not mean no chatbot can call tools — the two emphasize different modes of work.',
-  },
+      footnote: 'This does not mean no chatbot can call tools — the two emphasize different modes of work.',
+    },
+  ],
 
   scenario: {
     eyebrow: 'ENTERPRISE SCENARIO',

@@ -2,6 +2,7 @@
 import type { ConceptSpec, Locale } from './types';
 import OntologyDemo from './demos/ontology/OntologyDemo.astro';
 import DigitalEmployeeDemo from './demos/digital-employee/DigitalEmployeeDemo.astro';
+import AgentDemo from './demos/agent/AgentDemo.astro';
 
 /**
  * Demo 插件注册表 —— Engine 的唯一扩展点。
@@ -17,6 +18,7 @@ const { spec, locale } = Astro.props;
 const registry: Record<string, any> = {
   ontology: OntologyDemo,
   'digital-employee': DigitalEmployeeDemo,
+  agent: AgentDemo,
 };
 
 const Demo = registry[spec.demo.type];

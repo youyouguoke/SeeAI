@@ -18,6 +18,7 @@ export const zh = {
       methodology: '方法论',
       ontology: '本体论 · Ontology',
       digitalEmployee: '数字员工 · Digital Employee',
+      agent: 'Agent · 智能体',
     },
   },
   lang: {

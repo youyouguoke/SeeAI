@@ -20,6 +20,7 @@ export const en: UIStrings = {
       methodology: 'Methodology',
       ontology: 'Ontology',
       digitalEmployee: 'Digital Employee',
+      agent: 'Agent',
     },
   },
   lang: {

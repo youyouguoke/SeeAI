@@ -245,8 +245,9 @@ export const spec: ConceptSpec = {
     governance_conclusion: '数字员工真正进入企业，不只是因为它“会做事”，而是因为它的行为有边界。',
   },
 
-  comparison: {
-    title: 'Chatbot vs Digital Employee',
+  comparisons: [
+    {
+      title: 'Chatbot vs Digital Employee',
     left_label: 'CHATBOT',
     right_label: 'DIGITAL EMPLOYEE',
     rows: [
@@ -257,8 +258,9 @@ export const spec: ConceptSpec = {
       { left: '通常动作范围有限', right: '受治理的动作范围' },
       { left: '无明确的企业工作职责', right: '明确的业务角色与职责' },
     ],
-    footnote: '这不是说所有 Chatbot 都不能调用工具，而是两者强调的工作模式不同。',
-  },
+      footnote: '这不是说所有 Chatbot 都不能调用工具，而是两者强调的工作模式不同。',
+    },
+  ],
 
   scenario: {
     eyebrow: 'ENTERPRISE SCENARIO',

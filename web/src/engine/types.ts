@@ -211,8 +211,8 @@ export interface ConceptSpec {
   mentalModel?: FlowModelBlock;
   /** Deep Dive：定义卡 + Role/Access/Action/Governance 模型卡（可选） */
   deepDive?: DeepDiveBlock;
-  /** 横向对比表（可选） */
-  comparison?: VsTableBlock;
+  /** 横向对比表（可选，可多张：如 vs Workflow / vs Chatbot / vs Digital Employee） */
+  comparisons?: VsTableBlock[];
   scenario: ScenarioBlock;
   /** 概念连接（可选，Connections 的雏形） */
   connection?: ConnectionBlock;
@@ -250,7 +250,7 @@ export interface DeepDiveBlock {
     body: string;
     lists?: { label: string; items: string[]; tone: 'allow' | 'deny' | 'pending' }[];
   }[];
-  governance_conclusion: string;
+  governance_conclusion?: string;
 }
 
 /* -------------------- 横向对比表（可选区块） -------------------- */

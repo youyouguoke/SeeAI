@@ -18,7 +18,7 @@ export interface ConceptMatrixCopy {
     fullChapter: string;
   };
   upcomingTitle: string;
-  upcoming: { index: string; status: string; statusDone: boolean; title: string; body: string; visual: string }[];
+  upcoming: { index: string; status: string; statusDone: boolean; title: string; body: string; visual: string; href?: string }[];
 }
 
 interface Props {
@@ -105,31 +105,34 @@ const { c } = Astro.props;
   <h3 class="font-title text-title text-on font-semibold mt-10 mb-4">{c.upcomingTitle}</h3>
   <div class="grid md:grid-cols-3 gap-4">
     {
-      c.upcoming.map((u) => (
-        <div class="bg-surface rounded-xl border border-surface-variant p-6">
-          <div class="flex items-center gap-2 mb-3">
-            <span class="font-label text-label text-secondary font-semibold">{u.index}</span>
-            <span
-              class:list={[
-                'px-2 py-0.5 rounded-full text-label border',
-                u.statusDone
-                  ? 'bg-surface-container text-on border-surface-variant'
-                  : 'bg-surface text-secondary border-outline-variant',
-              ]}
-            >
-              {u.status}
-            </span>
+      c.upcoming.map((u) => {
+        const card = (
+          <div class="bg-surface rounded-xl border border-surface-variant p-6 h-full">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="font-label text-label text-secondary font-semibold">{u.index}</span>
+              <span
+                class:list={[
+                  'px-2 py-0.5 rounded-full text-label border',
+                  u.statusDone
+                    ? 'bg-surface-container text-on border-surface-variant'
+                    : 'bg-surface text-secondary border-outline-variant',
+                ]}
+              >
+                {u.status}
+              </span>
+            </div>
+            <h4 class="font-title text-title text-on mb-2">{u.title}</h4>
+            <p class="text-body text-secondary mb-4">{u.body}</p>
+            <p class="flex items-center gap-1.5 font-label text-label text-secondary">
+              <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">
+                {u.statusDone ? 'science' : 'lock_clock'}
+              </span>
+              {u.visual}
+            </p>
           </div>
-          <h4 class="font-title text-title text-on mb-2">{u.title}</h4>
-          <p class="text-body text-secondary mb-4">{u.body}</p>
-          <p class="flex items-center gap-1.5 font-label text-label text-secondary">
-            <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">
-              {u.statusDone ? 'science' : 'lock_clock'}
-            </span>
-            {u.visual}
-          </p>
-        </div>
-      ))
+        );
+        return u.href ? <a href={u.href} class="block rounded-xl transition-shadow hover:shadow-md">{card}</a> : card;
+      })
     }
   </div>
 </section>

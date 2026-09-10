@@ -93,7 +93,7 @@ const spec = mod.spec;
 
   {spec.definition && <Definition d={spec.definition} />}
   {spec.deepDive && <DeepDive d={spec.deepDive} />}
-  {spec.comparison && <VsTable v={spec.comparison} />}
+  {spec.comparisons?.map((v) => <VsTable v={v} />)}
 
   {spec.enterprise && <EnterprisePlatform e={spec.enterprise} />}
 

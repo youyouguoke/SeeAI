@@ -55,5 +55,9 @@ const toneColor: Record<string, string> = {
     }
   </div>
 
-  <p class="mt-6 text-body text-on font-medium max-w-3xl">{d.governance_conclusion}</p>
+  {
+    d.governance_conclusion && (
+      <p class="mt-6 text-body text-on font-medium max-w-3xl">{d.governance_conclusion}</p>
+    )
+  }
 </section>

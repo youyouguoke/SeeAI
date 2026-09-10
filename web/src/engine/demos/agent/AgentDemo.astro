@@ -1,0 +1,13 @@
+---
+import AgentDemo from './AgentDemo';
+import type { ConceptSpec, Locale } from '../../types';
+
+interface Props {
+  spec: ConceptSpec;
+  locale: Locale;
+}
+
+const { spec, locale } = Astro.props;
+---
+
+<AgentDemo spec={spec} locale={locale} client:load />
