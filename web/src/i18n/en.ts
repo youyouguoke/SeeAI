@@ -18,6 +18,8 @@ export const en: UIStrings = {
     nav: {
       concepts: 'Concepts',
       methodology: 'Methodology',
+      ontology: 'Ontology',
+      digitalEmployee: 'Digital Employee',
     },
   },
   lang: {

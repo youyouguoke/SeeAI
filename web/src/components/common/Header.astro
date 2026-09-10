@@ -14,8 +14,13 @@ function alternatePath(p: string): string {
   return p.replace(/^\/(zh|en)(?=\/|$)/, `/${localePair[locale]}`);
 }
 const alt = alternatePath(path);
-const isOntology = path.includes('/ontology');
 const homePath = `/${locale}/`;
+/** 已上线概念：slug → i18n label 键 */
+const concepts = [
+  { slug: 'ontology', label: t.header.nav.ontology as string },
+  { slug: 'digital-employee', label: t.header.nav.digitalEmployee as string },
+];
+const activeConcept = concepts.find((c) => path.includes(`/${c.slug}`));
 ---
 
 <header class="sticky top-0 z-50 w-full bg-surface/90 backdrop-blur-sm border-b border-surface-variant">
@@ -31,16 +36,38 @@ const homePath = `/${locale}/`;
     </a>
 
     <nav class="ml-auto flex items-center gap-6" aria-label={t.header.nav.concepts}>
-      <a
-        href={isOntology ? homePath : `${homePath}#concept`}
-        aria-current={isOntology ? 'page' : undefined}
-        class:list={[
-          'text-body text-on font-medium pb-0.5 border-b-2 transition-colors',
-          isOntology ? 'border-accent' : 'border-transparent hover:border-outline-variant',
-        ]}
-      >
-        {t.header.nav.concepts}
-      </a>
+      <div class="relative group/concepts">
+        <button
+          type="button"
+          aria-haspopup="true"
+          class:list={[
+            'flex items-center gap-1 text-body font-medium pb-0.5 border-b-2 transition-colors',
+            activeConcept ? 'text-on border-accent' : 'text-on border-transparent hover:border-outline-variant',
+          ]}
+        >
+          {t.header.nav.concepts}
+          <span class="material-symbols-outlined text-[1.1rem] text-secondary" aria-hidden="true">expand_more</span>
+        </button>
+        <div class="absolute right-0 top-full pt-2 opacity-0 invisible translate-y-1 group-hover/concepts:opacity-100 group-hover/concepts:visible group-hover/concepts:translate-y-0 group-focus-within/concepts:opacity-100 group-focus-within/concepts:visible group-focus-within/concepts:translate-y-0 transition-all duration-150">
+          <div class="w-60 rounded-xl border border-surface-variant bg-surface shadow-lg p-1.5">
+            {
+              concepts.map((c) => (
+                <a
+                  href={`/${locale}/${c.slug}/`}
+                  aria-current={path.includes(`/${c.slug}`) ? 'page' : undefined}
+                  class:list={[
+                    'flex items-center justify-between px-3 py-2.5 rounded-lg text-body font-medium transition-colors',
+                    path.includes(`/${c.slug}`) ? 'bg-primary-container text-primary-deep' : 'text-on hover:bg-surface-container',
+                  ]}
+                >
+                  {c.label}
+                  <span class="material-symbols-outlined text-[1.1rem]" aria-hidden="true">arrow_forward</span>
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </div>
       <span class="hidden sm:block h-4 w-px bg-outline-variant" aria-hidden="true"></span>
       <a
         href={alt}

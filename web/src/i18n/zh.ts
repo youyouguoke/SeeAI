@@ -16,6 +16,8 @@ export const zh = {
     nav: {
       concepts: '概念',
       methodology: '方法论',
+      ontology: '本体论 · Ontology',
+      digitalEmployee: '数字员工 · Digital Employee',
     },
   },
   lang: {
