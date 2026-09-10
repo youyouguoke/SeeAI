@@ -1,0 +1,45 @@
+---
+import type { GalleryBlock } from '../types';
+
+interface Props {
+  g: GalleryBlock;
+}
+
+const { g } = Astro.props;
+
+const levelStyle: Record<string, string> = {
+  A: 'bg-primary text-on-primary',
+  B: 'bg-primary-container text-primary-deep',
+  C: 'bg-surface-container text-on border border-surface-variant',
+  D: 'bg-surface border border-dashed border-outline-variant text-secondary',
+};
+---
+
+<section class="max-w-content mx-auto px-5 md:px-8 py-8 border-t border-surface-variant" id="scenarios">
+  <p class="font-label text-label text-primary font-semibold tracking-wider">{g.eyebrow}</p>
+  <h2 class="font-headline text-headline text-on mt-2">{g.title}</h2>
+  <p class="text-body text-secondary mt-2 mb-8 max-w-3xl">{g.intro}</p>
+
+  <div class="grid lg:grid-cols-3 gap-4">
+    {
+      g.items.map((item) => (
+        <article class="bg-surface rounded-xl border border-surface-variant p-6 flex flex-col">
+          <div class="flex items-center justify-between mb-3">
+            <span class="font-mono text-label text-primary font-bold">{item.tag}</span>
+            <span
+              class:list={['px-2 py-0.5 rounded-full text-label font-semibold', levelStyle[item.evidence_level]]}
+              title={item.evidence}
+            >
+              {item.evidence_level}
+            </span>
+          </div>
+          <h3 class="font-title text-title text-on font-semibold mb-2">{item.title}</h3>
+          <p class="text-body text-secondary">{item.body}</p>
+          <p class="mt-4 pt-3 border-t border-surface-variant text-label text-outline">{item.evidence}</p>
+        </article>
+      ))
+    }
+  </div>
+
+  <p class="mt-5 text-label text-outline max-w-3xl">{g.evidence_legend}</p>
+</section>

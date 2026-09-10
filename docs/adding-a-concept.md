@@ -44,11 +44,15 @@ import type { ConceptSpec } from '../../engine/types';
 export const spec: ConceptSpec = {
   id: '<slug>',
   demo: { type: '<slug>' /* 或复用已注册插件 */, payload: { /* 插件数据，插件内 narrow */ } },
+  nav?: [{ id, label }],              // 页内锚点导航（可选）
   idea:        { label, title, questions[] },
   definition:  { eyebrow, title, quote, compare{a,b}, components_label, components[], contrast? },
+  enterprise?: { ... },               // Part 2 企业语义平台（可选，EnterprisePlatform 组件）
+  caseStudy?:  { ... },               // Part 4 商业案例研究（可选，CaseStudy 组件）
+  gallery?:    { ... },               // Part 5 场景集（可选，ScenarioGallery 组件，带证据等级）
   scenario:    { eyebrow, title, intro, levels[], takeaway_title, takeaway_body },
-  misconceptions: { eyebrow, title, intro, myth_label, reality_label, items[] },
-  further:     { eyebrow, back_home, review_label, lang_switch },
+  misconceptions: { ..., cost?: {...} }, // Part 6 批判思考；cost 为可选扩展
+  further:     { eyebrow, back_home, review_label },
 };
 ```
 

@@ -93,6 +93,15 @@ export const spec: ConceptSpec = {
     } satisfies OntologyDemoPayload,
   },
 
+  nav: [
+    { id: 'workbench', label: '核心演示' },
+    { id: 'definition', label: '定义' },
+    { id: 'enterprise', label: '企业平台' },
+    { id: 'case-study', label: '案例研究' },
+    { id: 'scenarios', label: '场景集' },
+    { id: 'critical', label: '批判思考' },
+  ],
+
   idea: {
     label: 'The Mental Model',
     title: '这就是本体论。',
@@ -126,6 +135,103 @@ export const spec: ConceptSpec = {
     },
   },
 
+  enterprise: {
+    eyebrow: 'PART 02 · ENTERPRISE AI PLATFORM',
+    title: '从数据到业务上下文',
+    intro:
+      '一家制造企业里，数据并不缺——缺的是横跨系统的业务语义。看 Ontology 如何坐在现有系统与 AI 应用之间，把分散的数据变成可推理的业务上下文。',
+    systems: [
+      { code: 'ERP', name: '企业资源计划', knows: '订单' },
+      { code: 'PLM', name: '产品生命周期', knows: '产品' },
+      { code: 'MES', name: '制造执行', knows: '生产' },
+      { code: 'SRM', name: '供应商管理', knows: '供应商' },
+      { code: 'QMS', name: '质量管理', knows: '质量' },
+      { code: 'CRM', name: '客户关系', knows: '客户' },
+      { code: 'WMS', name: '仓储管理', knows: '库存' },
+    ],
+    ontology_label: 'Ontology · 企业语义与操作层',
+    ai_label: 'AI 应用 · Agents · 业务操作',
+    note_title: '语义叠加层',
+    note_body: 'Ontology 不替换 ERP / PLM / MES——它在现有系统之上建立统一的业务语义与操作模型',
+    twin: {
+      quote: '“可以把企业 Ontology 理解成企业运营世界的一种语义化数字映射。”',
+      body: '现实中的产品、设备、人员、订单和供应商，都被表示为有身份、有状态、有关联的业务对象。这是一种帮助理解的说法，而不是 Ontology = Digital Twin 的严格定义。',
+    },
+    conclusion:
+      '企业未必缺数据。真正的问题是：业务语义分散在多个系统里，而 AI 需要的恰恰是这些语义。',
+  },
+
+  caseStudy: {
+    eyebrow: 'PART 04 · CASE STUDY',
+    title: '案例研究：Palantir 的实现路径',
+    note: {
+      label: '案例说明',
+      body: 'Palantir 是目前将 Ontology、业务逻辑、AI 与业务操作结合得较为完整的商业案例之一。本节分析的是 Palantir 如何实现这些理念，而不是定义 Ontology 应该如何实现。企业也可以通过自建知识图谱与规则引擎、语义层或其他企业 AI 平台采用不同的实现路径。',
+    },
+    steps: [
+      {
+        index: '01',
+        title: 'Map the World · 映射现实世界',
+        body: '工厂、产品、零件、供应商、订单、人员、设备——先把现实世界中的业务事物表示为对象（Objects）。',
+        diagram: ['Factory · Product · Part', 'Supplier · Order · Machine', '        ↓ 映射', 'Objects（对象）'],
+      },
+      {
+        index: '02',
+        title: 'Connect the World · 连接世界',
+        body: '对象之间用业务关系连接起来：包含、供应、依赖。这里讲的是 Object + Property + Link，而不是“Palantir 发明了这些东西”。',
+        diagram: ['Product A', '   ↓ contains', 'Part 001', '   ↓ supplied by', 'Supplier X'],
+      },
+      {
+        index: '03',
+        title: 'Model Decisions · 建模决策',
+        body: 'Ontology 不只是告诉 AI“供应商 X 延迟了”，而是帮助系统理解：这个供应商属于哪条业务对象链？这个变化会影响什么？',
+        diagram: ['Supplier delay', '   → Part shortage', '   → Production impact', '   → Customer order', '   → Business decision'],
+      },
+      {
+        index: '04',
+        title: 'Operate the World · 操作世界',
+        body: '决策落到动作：受治理的工作流、权限控制、系统更新——语义模型成为业务操作层，而不只是查询层。',
+        diagram: ['Decision → Action', '   → Business System', '   → State Change'],
+      },
+    ],
+    callout:
+      '真正值得理解的，不是“Palantir 有一个 Ontology 产品”，而是它展示了一种可能的企业级实现方式：让语义模型成为连接数据、业务逻辑、决策、动作和 AI 的操作层。',
+    alt_label: 'Ontology 是一种业务建模方法，而不是某一家厂商定义的产品架构。其他实现路径：',
+    alt_items: ['自建知识图谱 + 规则引擎', '语义层（Semantic Layer）', 'Ontology / 运营平台', '其他企业 AI 平台'],
+  },
+
+  gallery: {
+    eyebrow: 'PART 05 · ENTERPRISE SCENARIOS',
+    title: '企业场景集',
+    intro:
+      '三个来自不同行业的落地场景。每个案例都标注证据等级——SeeAI 只讲有出处的机制，不讲故事会。',
+    evidence_legend:
+      '证据等级：A 官方/一手来源 · B 可信二手来源 · C 分析/行业解读 · D 教学简化示例。以下三个场景的机制描述基于公开实践，具体数字一律不引用未经核验的数据。',
+    items: [
+      {
+        tag: 'Scenario 01',
+        title: '跨国并购后的数据孤岛',
+        body: '德国工厂用 SAP，中国工厂用本土 ERP，外加 MES 与 WMS：同一种原料在两个系统里 ID 不同、Schema 不同、安全库存规则不同——库存预警永远对不上。Ontology 用“同一物料”关系把 SAP-DE-88231 与 YS-CN-40217 映射到同一个 Titanium Dioxide 对象上，预警第一次对齐。数据存在 ≠ 业务上下文对齐。',
+        evidence: '改编自公开报道的企业整合挑战；操作细节为教学简化',
+        evidence_level: 'D',
+      },
+      {
+        tag: 'Scenario 02',
+        title: '建筑项目：变更的连锁传播',
+        body: '排期变化沿着关系链传播：Schedule → Contract → Budget → People → Operations。关系不是静态展示——一个对象的状态变化会沿关系波及相关业务对象，这正是 Relationships + Actions 一起存在的价值。',
+        evidence: '具体数字（如员工覆盖率）在核验到公开来源前不引用；此处仅讲机制',
+        evidence_level: 'D',
+      },
+      {
+        tag: 'Scenario 03',
+        title: '金融风控与合规',
+        body: 'Customer → owns → Account → performs → Transaction → originates from → IP → associated with → Device。Ontology 为风险模式与受治理的调查动作提供结构化上下文：调查、冻结、审批——每一步都留下审计轨迹。注意：它不会“自动发现所有欺诈”。',
+        evidence: '机制基于公开行业实践描述；不涉及任何具体机构数据',
+        evidence_level: 'D',
+      },
+    ],
+  },
+
   scenario: {
     eyebrow: '企业场景',
     title: '供应链中断如何层层传导',
@@ -143,12 +249,18 @@ export const spec: ConceptSpec = {
   },
 
   misconceptions: {
-    eyebrow: '关键澄清',
-    title: '常见误解',
-    intro: '为什么传统捷径替代不了显式的语义治理。',
+    eyebrow: 'PART 06 · CRITICAL THINKING',
+    title: 'Ontology 不是银弹',
+    intro: '在投入之前，先看清边界、治理责任与真实代价。',
     myth_label: '误解',
     reality_label: '事实',
     items: [
+      {
+        myth: '“上了 Ontology，AI 就不会幻觉。”',
+        reality:
+          'Ontology 可以提供更结构化、受约束的业务上下文，但不会自动消除模型错误或幻觉。',
+        tagline: '结构上下文压缩胡编空间，不等于零错误。',
+      },
       {
         myth: '“本体论 = 知识图谱”',
         reality:
@@ -156,18 +268,41 @@ export const spec: ConceptSpec = {
         tagline: '图谱是介质，本体论是语法。',
       },
       {
-        myth: '“把 PDF 喂给大模型就够了”',
+        myth: '“Ontology 解决了数据治理。”',
         reality:
-          '语言模型从文本中学习统计相关性，不核验事实关系。没有显式关系链，“供应商 X 影响订单 Y”只是概率上的猜测，不是可审计的结论。',
-        tagline: '文本概率 ≠ 业务事实。',
+          'Ontology 可以帮助表达统一语义，但数据质量、责任归属、主数据管理仍然需要组织治理。',
+        tagline: '语义层不是治理的替代品。',
       },
       {
-        myth: '“本体论会替代 ERP / PLM”',
+        myth: '“Ontology 只是技术项目。”',
         reality:
-          '不会。它作为非侵入的语义层叠加在现有系统之上——ERP 和 PLM 继续处理事务记录，本体论负责把它们连成 AI 可用的上下文。',
-        tagline: '记录系统照旧运转，本体论负责编排语义。',
+          '真正困难的往往是业务定义、跨团队对齐、数据所有权、治理、安全与合规。定义“什么是 Product”，可能比建数据库更难。',
+        tagline: '难点在组织，不在 Schema。',
+      },
+      {
+        myth: '“Palantir 的做法就是 Ontology 的标准答案。”',
+        reality:
+          'Palantir 是一种成熟的商业实现路径，但不是 Ontology 的唯一实现方式。Ontology 是一种业务建模方法，而不是某一家厂商定义的产品架构。',
+        tagline: '方法 ≠ 厂商实现。',
       },
     ],
+    cost: {
+      title: 'Ontology 的真正成本：价值来自长期积累，而不是建完 Schema 就结束',
+      items: [
+        'Ontology 本体模型',
+        'Business Rules 业务规则',
+        'Connectors 系统连接器',
+        'Data Mapping 数据映射',
+        'Security Model 权限模型',
+        'Test Data 测试数据',
+        'Operational Knowledge 运营知识',
+      ],
+      flywheel_title: '知识飞轮',
+      flywheel_steps: ['企业知识', 'Ontology', 'AI · 决策 · 动作', '运营数据', '持续学习'],
+      summary:
+        '真正形成壁垒的往往不是某个模型本身，而是企业长期沉淀的业务模型、数据连接、测试体系、权限设计和运营知识。',
+      discipline: '以上为分析判断，用于帮助技术决策者评估投入，不代表任何厂商的官方结论。',
+    },
   },
 
   further: {

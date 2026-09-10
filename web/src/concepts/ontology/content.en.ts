@@ -89,6 +89,15 @@ export const spec: ConceptSpec = {
     } satisfies OntologyDemoPayload,
   },
 
+  nav: [
+    { id: 'workbench', label: 'Core Demo' },
+    { id: 'definition', label: 'Definition' },
+    { id: 'enterprise', label: 'Enterprise' },
+    { id: 'case-study', label: 'Case Study' },
+    { id: 'scenarios', label: 'Scenarios' },
+    { id: 'critical', label: 'Critical Thinking' },
+  ],
+
   idea: {
     label: 'The Mental Model',
     title: "That's the idea.",
@@ -122,6 +131,103 @@ export const spec: ConceptSpec = {
     },
   },
 
+  enterprise: {
+    eyebrow: 'PART 02 · ENTERPRISE AI PLATFORM',
+    title: 'From Data to Business Context',
+    intro:
+      'A manufacturing enterprise rarely lacks data — what it lacks is business semantics spanning systems. See where Ontology sits between existing systems and AI applications, turning scattered data into reason-able business context.',
+    systems: [
+      { code: 'ERP', name: 'Enterprise Resource Planning', knows: 'Orders' },
+      { code: 'PLM', name: 'Product Lifecycle', knows: 'Products' },
+      { code: 'MES', name: 'Manufacturing Execution', knows: 'Production' },
+      { code: 'SRM', name: 'Supplier Management', knows: 'Suppliers' },
+      { code: 'QMS', name: 'Quality Management', knows: 'Quality' },
+      { code: 'CRM', name: 'Customer Relations', knows: 'Customers' },
+      { code: 'WMS', name: 'Warehouse Management', knows: 'Inventory' },
+    ],
+    ontology_label: 'Ontology · Semantic & Operational Layer',
+    ai_label: 'AI Applications · Agents · Business Operations',
+    note_title: 'Semantic Overlay',
+    note_body: 'Ontology does not replace ERP / PLM / MES — it builds a unified business semantics and operations model on top of existing systems',
+    twin: {
+      quote: '“You can think of an enterprise ontology as a semantic model of the enterprise.”',
+      body: 'Products, machines, people, orders, and suppliers in the real world are represented as business objects with identity, state, and relationships. This is a helpful framing, not a strict definition of Ontology = Digital Twin.',
+    },
+    conclusion:
+      'The enterprise does not necessarily lack data. The problem is that business meaning is distributed across systems — and that is exactly what AI needs.',
+  },
+
+  caseStudy: {
+    eyebrow: 'PART 04 · CASE STUDY',
+    title: "Case Study: Palantir's Approach",
+    note: {
+      label: 'About This Case',
+      body: "Palantir is one of the more complete commercial cases combining Ontology, business logic, AI, and business operations. This section analyzes how Palantir implements these ideas — it does not define how Ontology must be implemented. Enterprises can also take different paths: self-built knowledge graphs with rule engines, semantic layers, or other enterprise AI platforms.",
+    },
+    steps: [
+      {
+        index: '01',
+        title: 'Map the World',
+        body: 'Factories, products, parts, suppliers, orders, employees, machines — real-world business things are first represented as Objects.',
+        diagram: ['Factory · Product · Part', 'Supplier · Order · Machine', '        ↓ map', 'Objects'],
+      },
+      {
+        index: '02',
+        title: 'Connect the World',
+        body: 'Objects are linked by business relationships: contains, supplied by, depends on. The point is Object + Property + Link — not that Palantir invented these concepts.',
+        diagram: ['Product A', '   ↓ contains', 'Part 001', '   ↓ supplied by', 'Supplier X'],
+      },
+      {
+        index: '03',
+        title: 'Model Decisions',
+        body: 'An ontology does not merely tell AI "Supplier X is delayed" — it helps the system understand which business object chain the supplier belongs to, and what this change will affect.',
+        diagram: ['Supplier delay', '   → Part shortage', '   → Production impact', '   → Customer order', '   → Business decision'],
+      },
+      {
+        index: '04',
+        title: 'Operate the World',
+        body: 'Decisions land as actions: governed workflows, access control, system updates — the semantic model becomes an operational layer, not just a query layer.',
+        diagram: ['Decision → Action', '   → Business System', '   → State Change'],
+      },
+    ],
+    callout:
+      'The important idea is not that Palantir has an "Ontology product." It is that Palantir demonstrates one possible enterprise-grade implementation: letting the semantic model become the operational layer connecting data, logic, decisions, actions, and AI.',
+    alt_label: 'Ontology is a modeling approach, not a single product architecture. Other implementation paths:',
+    alt_items: ['Self-built knowledge graph + rules', 'Semantic Layer', 'Ontology / operational platform', 'Other enterprise AI platforms'],
+  },
+
+  gallery: {
+    eyebrow: 'PART 05 · ENTERPRISE SCENARIOS',
+    title: 'Enterprise Scenario Gallery',
+    intro:
+      'Three implementation scenarios from different industries. Every case carries an evidence level — SeeAI explains mechanisms with sources, not storytelling.',
+    evidence_legend:
+      'Evidence levels: A — primary/official source · B — reputable secondary source · C — analyst/industry interpretation · D — illustrative/simplified. Mechanism descriptions below are based on public practice; no unverified figures are quoted.',
+    items: [
+      {
+        tag: 'Scenario 01',
+        title: 'Data Silos After a Cross-border Merger',
+        body: "The German plant runs SAP, the Chinese plant runs a domestic ERP, plus MES and WMS: the same raw material has different IDs, schemas, and safety-stock rules in each system — inventory alerts never line up. An ontology maps SAP-DE-88231 and YS-CN-40217 to the same Titanium Dioxide object via a 'same material' relationship, and the alerts finally agree. Data exists ≠ business context is aligned.",
+        evidence: 'Adapted from publicly reported enterprise integration challenges; operational details simplified for teaching',
+        evidence_level: 'D',
+      },
+      {
+        tag: 'Scenario 02',
+        title: 'Construction: Change Propagation',
+        body: 'A schedule change propagates along the relationship chain: Schedule → Contract → Budget → People → Operations. Relationships are not static decoration — a state change in one object ripples through related business objects. This is why Relationships and Actions belong together.',
+        evidence: 'Specific figures (e.g. employee coverage) are not quoted until verified against public sources; mechanism only',
+        evidence_level: 'D',
+      },
+      {
+        tag: 'Scenario 03',
+        title: 'Financial Risk & Compliance',
+        body: 'Customer → owns → Account → performs → Transaction → originates from → IP → associated with → Device. An ontology provides structured context for risk patterns and governed investigative actions: investigate, freeze, approve — every step leaves an audit trail. Note: it does not "automatically detect all fraud."',
+        evidence: 'Mechanism described from public industry practice; no data from any specific institution',
+        evidence_level: 'D',
+      },
+    ],
+  },
+
   scenario: {
     eyebrow: 'Enterprise Scenario',
     title: 'How a Supply Chain Disruption Cascades',
@@ -139,12 +245,18 @@ export const spec: ConceptSpec = {
   },
 
   misconceptions: {
-    eyebrow: 'Critical Clarifications',
-    title: 'Common Misconceptions',
-    intro: 'Why traditional shortcuts fail to replace explicit semantic governance.',
+    eyebrow: 'PART 06 · CRITICAL THINKING',
+    title: 'Ontology Is Not a Silver Bullet',
+    intro: 'Before committing, look at the boundaries, governance responsibilities, and real costs.',
     myth_label: 'Myth',
     reality_label: 'Reality',
     items: [
+      {
+        myth: '"With an ontology, AI will not hallucinate."',
+        reality:
+          'An ontology provides more structured, constrained business context, but it does not automatically eliminate model errors or hallucinations.',
+        tagline: 'Structured context narrows the room for fabrication; it is not zero error.',
+      },
       {
         myth: '"An ontology is just a Knowledge Graph"',
         reality:
@@ -152,18 +264,41 @@ export const spec: ConceptSpec = {
         tagline: 'The graph is the medium; the ontology is the grammar.',
       },
       {
-        myth: '"Just feed raw PDFs to an LLM"',
+        myth: '"An ontology solves data governance."',
         reality:
-          'Language models learn statistical correlations from text; they do not verify factual relationships. Without explicit relationship chains, “Supplier X affects Order Y” remains a probability guess, not an auditable conclusion.',
-        tagline: 'Text probability ≠ business fact.',
+          'An ontology helps express unified semantics, but data quality, ownership, and master data management still require organizational governance.',
+        tagline: 'A semantic layer is not a substitute for governance.',
       },
       {
-        myth: '"An ontology replaces ERP / PLM"',
+        myth: '"An ontology is just a tech project."',
         reality:
-          'No. It acts as a non-invasive semantic overlay — ERP and PLM keep processing transactional records while the ontology wires them into AI-usable context.',
-        tagline: 'Systems of record persist; the ontology orchestrates meaning.',
+          'The hard parts are often business definition, cross-team alignment, data ownership, governance, security, and compliance. Defining "what a Product is" can be harder than building the database.',
+        tagline: 'The difficulty is organizational, not in the schema.',
+      },
+      {
+        myth: '"Palantir\'s approach is the standard answer for Ontology."',
+        reality:
+          "Palantir is a mature commercial implementation path, but not the only one. Ontology is a modeling approach — not a product architecture defined by any single vendor.",
+        tagline: 'Method ≠ vendor implementation.',
       },
     ],
+    cost: {
+      title: 'The True Cost of Ontology: value comes from long-term accumulation, not from finishing a schema',
+      items: [
+        'Ontology model',
+        'Business rules',
+        'Connectors',
+        'Data mapping',
+        'Security model',
+        'Test data',
+        'Operational knowledge',
+      ],
+      flywheel_title: 'Knowledge Flywheel',
+      flywheel_steps: ['Enterprise Knowledge', 'Ontology', 'AI · Decisions · Actions', 'Operational Data', 'Continuous Learning'],
+      summary:
+        'The real moat is usually not any single model — it is the business model, data connections, testing systems, access design, and operational knowledge accumulated over years.',
+      discipline: 'The above is analytical judgment to help technical decision-makers evaluate investment; it is not any vendor\'s official claim.',
+    },
   },
 
   further: {

@@ -8,7 +8,7 @@ interface Props {
 const { m } = Astro.props;
 ---
 
-<section class="max-w-content mx-auto px-5 md:px-8 py-8 border-t border-surface-variant" id="misconceptions">
+<section class="max-w-content mx-auto px-5 md:px-8 py-8 border-t border-surface-variant" id="critical">
   <p class="font-label text-label text-secondary font-semibold tracking-wider">{m.eyebrow}</p>
   <h2 class="font-headline text-headline text-on mt-2">{m.title}</h2>
   <p class="text-body text-secondary mt-2 mb-8">{m.intro}</p>
@@ -40,4 +40,35 @@ const { m } = Astro.props;
       ))
     }
   </div>
+
+  {
+    m.cost && (
+      <div class="mt-8 rounded-xl border border-surface-variant bg-surface-container p-6 md:p-7 max-w-3xl">
+        <h3 class="font-title text-title text-on font-semibold mb-4">{m.cost.title}</h3>
+        <ul class="space-y-2 mb-6">
+          {m.cost.items.map((item) => (
+            <li class="flex items-center gap-2.5 text-body text-on">
+              <span class="material-symbols-outlined text-primary text-[1.1rem]" aria-hidden="true">add</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="font-label text-label font-semibold text-secondary mb-2.5">{m.cost.flywheel_title}</p>
+        <div class="flex flex-wrap items-center gap-1.5 mb-6">
+          {m.cost.flywheel_steps.map((s, i) => (
+            <>
+              <span class="px-2.5 py-1 rounded-full bg-surface border border-surface-variant text-label text-on">{s}</span>
+              {i < m.cost!.flywheel_steps.length - 1 && (
+                <span class="material-symbols-outlined text-outline text-[0.9rem]" aria-hidden="true">arrow_forward</span>
+              )}
+            </>
+          ))}
+        </div>
+        <blockquote class="border-l-2 border-primary pl-4">
+          <p class="text-body text-on font-medium">{m.cost.summary}</p>
+        </blockquote>
+        <p class="text-label text-outline mt-4">{m.cost.discipline}</p>
+      </div>
+    )
+  }
 </section>

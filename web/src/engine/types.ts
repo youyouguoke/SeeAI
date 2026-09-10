@@ -68,13 +68,95 @@ export interface ScenarioBlock {
   takeaway_body: string;
 }
 
+export interface MisconceptionItem {
+  myth: string;
+  reality: string;
+  tagline: string;
+}
+
 export interface MisconceptionsBlock {
   eyebrow: string;
   title: string;
   intro: string;
   myth_label: string;
   reality_label: string;
-  items: { myth: string; reality: string; tagline: string }[];
+  items: MisconceptionItem[];
+  /** Part 6 扩展：Ontology 的真正成本（可选，纯静态呈现，不用则不写） */
+  cost?: {
+    title: string;
+    items: string[];
+    flywheel_title: string;
+    flywheel_steps: string[];
+    summary: string;
+    discipline: string;
+  };
+}
+
+/* -------------------- Part 2 · 企业语义平台（可选区块） -------------------- */
+
+export interface EnterpriseSystem {
+  code: string;
+  name: string;
+  knows: string;
+}
+
+export interface EnterpriseBlock {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  systems: EnterpriseSystem[];
+  ontology_label: string;
+  ai_label: string;
+  note_title: string;
+  note_body: string;
+  twin: { quote: string; body: string };
+  conclusion: string;
+}
+
+/* -------------------- Part 4 · 商业案例研究（可选区块） -------------------- */
+
+export interface CaseStudyStep {
+  index: string;
+  title: string;
+  body: string;
+  diagram: string[];
+}
+
+export interface CaseStudyBlock {
+  eyebrow: string;
+  title: string;
+  note: { label: string; body: string };
+  steps: CaseStudyStep[];
+  callout: string;
+  alt_label: string;
+  alt_items: string[];
+}
+
+/* -------------------- Part 5 · 企业场景集（可选区块，带证据等级） -------------------- */
+
+export type EvidenceLevel = 'A' | 'B' | 'C' | 'D';
+
+export interface GalleryItem {
+  tag: string;
+  title: string;
+  body: string;
+  evidence: string;
+  evidence_level: EvidenceLevel;
+}
+
+export interface GalleryBlock {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  evidence_legend: string;
+  items: GalleryItem[];
+}
+
+/* ------------------------------ 页内锚点导航（可选） ------------------------------ */
+
+export interface NavItem {
+  id: string;
+  label: string;
 }
 
 export interface FurtherBlock {
@@ -113,8 +195,16 @@ export interface DemoDefinition {
 export interface ConceptSpec {
   id: string;
   demo: DemoDefinition;
+  /** 页内锚点导航（可选） */
+  nav?: NavItem[];
   idea: IdeaBlock;
   definition: DefinitionBlock;
+  /** Part 2 企业语义平台（可选） */
+  enterprise?: EnterpriseBlock;
+  /** Part 4 商业案例研究（可选） */
+  caseStudy?: CaseStudyBlock;
+  /** Part 5 企业场景集（可选） */
+  gallery?: GalleryBlock;
   scenario: ScenarioBlock;
   misconceptions: MisconceptionsBlock;
   further: FurtherBlock;

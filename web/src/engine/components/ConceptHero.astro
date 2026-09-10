@@ -4,15 +4,21 @@ interface MetaItem {
   text: string;
 }
 
+interface NavChip {
+  id: string;
+  label: string;
+}
+
 interface Props {
   conceptLabel: string;
   title: string;
   teaser: string;
   teaserEmphasis: string;
   meta: { icon: string; text: string }[];
+  nav?: NavChip[];
 }
 
-const { conceptLabel, title, teaser, teaserEmphasis, meta } = Astro.props;
+const { conceptLabel, title, teaser, teaserEmphasis, meta, nav } = Astro.props;
 ---
 
 <section class="max-w-content mx-auto px-5 md:px-8 pt-12 pb-10">
@@ -49,5 +55,20 @@ const { conceptLabel, title, teaser, teaserEmphasis, meta } = Astro.props;
       {teaser}
       <strong class="block mt-2 font-semibold text-primary">{teaserEmphasis}</strong>
     </p>
+
+    {
+      nav && nav.length > 0 && (
+        <nav class="flex flex-wrap gap-2 mt-7" aria-label="Section">
+          {nav.map((n) => (
+            <a
+              href={`#${n.id}`}
+              class="px-3 py-1.5 rounded-full bg-surface border border-surface-variant text-label text-secondary hover:text-primary hover:border-primary-container transition-colors"
+            >
+              {n.label}
+            </a>
+          ))}
+        </nav>
+      )
+    }
   </div>
 </section>

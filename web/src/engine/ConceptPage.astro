@@ -7,16 +7,21 @@ import ConceptHero from './components/ConceptHero.astro';
 import DemoSlot from './DemoSlot.astro';
 import IdeaSection from './components/IdeaSection.astro';
 import Definition from './components/Definition.astro';
+import EnterprisePlatform from './components/EnterprisePlatform.astro';
 import Scenario from './components/Scenario.astro';
+import CaseStudy from './components/CaseStudy.astro';
+import ScenarioGallery from './components/ScenarioGallery.astro';
 import Misconceptions from './components/Misconceptions.astro';
 import Quiz from './components/Quiz.astro';
 import FurtherLearning from './components/FurtherLearning.astro';
 
 /**
  * ConceptPage —— Concept Learning Engine 的教学骨架（怎么教）。
- * 认知叙事顺序：Hero → Demo（插件）→ Mental Model → Deep Dive(Definition) →
- *               Scenario → Misconceptions → Quiz → Further Learning
+ * 认知叙事：Hero(锚点导航) → Demo（插件）→ Mental Model → Definition →
+ *          Enterprise?(可选) → Scenario → CaseStudy?(可选) → Gallery?(可选)
+ *          → Critical(Misconceptions,可选 cost) → Quiz → Further Learning
  * 教什么全部来自：MDX frontmatter（meta/quiz）+ ConceptSpec（内容模块）+ MDX 正文（散文）。
+ * 可选区块概念不写就不渲染——Engine 不强迫每个概念套用全部结构。
  */
 
 const modules = import.meta.glob('../concepts/*/content.*.ts', { eager: true }) as Record<
@@ -56,6 +61,7 @@ const spec = mod.spec;
     teaser={fm.teaser}
     teaserEmphasis={fm.teaser_emphasis}
     meta={fm.hero_meta.map((text, i) => ({ icon: ['schedule', 'precision_manufacturing', 'verified'][i], text }))}
+    nav={spec.nav}
   />
 
   <DemoSlot spec={spec} locale={locale} />
@@ -65,7 +71,15 @@ const spec = mod.spec;
   </IdeaSection>
 
   <Definition d={spec.definition} />
+
+  {spec.enterprise && <EnterprisePlatform e={spec.enterprise} />}
+
   <Scenario s={spec.scenario} />
+
+  {spec.caseStudy && <CaseStudy c={spec.caseStudy} />}
+
+  {spec.gallery && <ScenarioGallery g={spec.gallery} />}
+
   <Misconceptions m={spec.misconceptions} />
   <Quiz q={fm.quiz} />
   <FurtherLearning f={spec.further} next={fm.next_concept} locale={locale} />
