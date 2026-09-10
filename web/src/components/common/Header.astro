@@ -59,7 +59,11 @@ const homePath = `/${locale}/`;
   import { track, ANALYTICS_EVENTS } from '../../lib/analytics';
   document.querySelectorAll<HTMLAnchorElement>('a[data-track-lang]').forEach((a) => {
     a.addEventListener('click', () => {
-      track(ANALYTICS_EVENTS.LANG_SWITCH, { to: a.dataset.trackLang });
+      const to = a.dataset.trackLang;
+      try {
+        localStorage.setItem('seeai-lang', to ?? '');
+      } catch {}
+      track(ANALYTICS_EVENTS.LANG_SWITCH, { to });
     });
   });
 </script>

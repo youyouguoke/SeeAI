@@ -56,6 +56,7 @@ const { conceptLabel, title, teaser, teaserEmphasis, meta, langSwitch } = Astro.
         href={langSwitch.href}
         hreflang={langSwitch.label === '中文版' ? 'zh' : 'en'}
         lang={langSwitch.label === '中文版' ? 'zh' : 'en'}
+        data-track-lang={langSwitch.label === '中文版' ? 'zh' : 'en'}
         class="inline-flex items-center gap-1.5 text-label font-medium text-secondary hover:text-primary transition-colors"
       >
         <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">translate</span>

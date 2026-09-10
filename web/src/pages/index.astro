@@ -1,51 +1,38 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-
 /**
- * Language Gateway — 语言门户（noindex，不自动跳转）。
- * 极简：品牌 + 定位 + 双语入口。
+ * Language Gateway — 自动语言跳转（noindex）。
+ * 优先级：localStorage 手动选择 > 浏览器/系统语言（zh* → zh，其余 → en）。
+ * 纯静态实现：内联脚本在绘制前 replace，noscript 兜底给双入口链接。
  */
 ---
 
-<BaseLayout
-  locale="zh"
-  path="/"
-  title="SeeAI — Understand AI by Seeing It"
-  description="SeeAI — 交互式 AI 概念学习平台。Interactive AI concept learning platform."
-  noindex
->
-  <section class="min-h-[calc(100vh-4rem)] flex items-center justify-center px-5">
-    <div class="text-center max-w-xl anim-fade-up">
-      <p class="inline-flex items-center gap-2 font-label text-label text-secondary">
-        <span class="w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true"></span>
-        Interactive AI Concepts · 交互式 AI 概念
-      </p>
-      <h1 class="font-display text-display text-on mt-6 mb-4 tracking-tight">
-        See<span class="text-primary">AI</span>
-      </h1>
-      <p class="font-body text-body text-secondary mb-12">
-        Understand AI by seeing how it <em class="font-serif not-italic text-primary">actually</em> works.
-        <span class="block mt-1.5">看清 AI 如何<span class="text-primary font-medium">真正</span>运作。</span>
-      </p>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <a
-          href="/zh/"
-          lang="zh-CN"
-          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-primary text-on-primary font-title text-title font-medium hover:bg-primary-deep transition-colors"
-        >
-          中文站
-          <span class="material-symbols-outlined text-[1.2rem]" aria-hidden="true">arrow_forward</span>
-        </a>
-        <a
-          href="/en/"
-          lang="en"
-          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-surface text-on font-title text-title font-medium border border-outline-variant hover:border-outline transition-colors"
-        >
-          English
-          <span class="material-symbols-outlined text-[1.2rem]" aria-hidden="true">arrow_forward</span>
-        </a>
-      </div>
-      <p class="mt-10 text-label text-outline">seeai.site</p>
-    </div>
-  </section>
-</BaseLayout>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SeeAI</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="SeeAI — Understand AI by Seeing It." />
+    <script is:inline>
+      (function () {
+        var lang = null;
+        try {
+          lang = localStorage.getItem('seeai-lang');
+        } catch (e) {}
+        if (lang !== 'zh' && lang !== 'en') {
+          lang = (navigator.language || '').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+        }
+        window.location.replace('/' + lang + '/');
+      })();
+    </script>
+  </head>
+  <body style="font-family: system-ui, sans-serif; text-align: center; padding-top: 40vh; color: #44464e; background: #fbf8fc;">
+    <p>
+      SeeAI — Understand AI by Seeing It<br />
+      <a href="/zh/" style="color: #004ac6;">中文站</a>
+      &nbsp;·&nbsp;
+      <a href="/en/" style="color: #004ac6;">English</a>
+    </p>
+  </body>
+</html>

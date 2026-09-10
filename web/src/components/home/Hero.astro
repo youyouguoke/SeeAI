@@ -10,7 +10,6 @@ export interface HeroCopy {
   ctaSecondary: string;
   ctaSecondaryHref: string;
   meta: string[];
-  langNote: string;
 }
 
 interface Props {
@@ -51,8 +50,6 @@ const { c } = Astro.props;
         <span class="material-symbols-outlined text-[1.1rem]" aria-hidden="true">south</span>
       </a>
     </div>
-
-    <p class="text-label text-secondary mb-8">{c.langNote}</p>
 
     <dl class="flex flex-wrap justify-center gap-x-8 gap-y-3">
       {
