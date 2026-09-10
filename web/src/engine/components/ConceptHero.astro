@@ -9,11 +9,10 @@ interface Props {
   title: string;
   teaser: string;
   teaserEmphasis: string;
-  meta: MetaItem[];
-  langSwitch: { href: string; label: string };
+  meta: { icon: string; text: string }[];
 }
 
-const { conceptLabel, title, teaser, teaserEmphasis, meta, langSwitch } = Astro.props;
+const { conceptLabel, title, teaser, teaserEmphasis, meta } = Astro.props;
 ---
 
 <section class="max-w-content mx-auto px-5 md:px-8 pt-12 pb-10">
@@ -49,19 +48,6 @@ const { conceptLabel, title, teaser, teaserEmphasis, meta, langSwitch } = Astro.
     <p class="font-body text-body text-on font-medium max-w-2xl mt-6">
       {teaser}
       <strong class="block mt-2 font-semibold text-primary">{teaserEmphasis}</strong>
-    </p>
-
-    <p class="mt-5">
-      <a
-        href={langSwitch.href}
-        hreflang={langSwitch.label === '中文版' ? 'zh' : 'en'}
-        lang={langSwitch.label === '中文版' ? 'zh' : 'en'}
-        data-track-lang={langSwitch.label === '中文版' ? 'zh' : 'en'}
-        class="inline-flex items-center gap-1.5 text-label font-medium text-secondary hover:text-primary transition-colors"
-      >
-        <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">translate</span>
-        {langSwitch.label}
-      </a>
     </p>
   </div>
 </section>

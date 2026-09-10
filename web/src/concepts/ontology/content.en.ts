@@ -170,6 +170,5 @@ export const spec: ConceptSpec = {
     eyebrow: 'Keep Learning',
     back_home: 'Back to Home',
     review_label: 'Review the Demo',
-    lang_switch: '中文版',
   },
 };

@@ -56,7 +56,6 @@ const spec = mod.spec;
     teaser={fm.teaser}
     teaserEmphasis={fm.teaser_emphasis}
     meta={fm.hero_meta.map((text, i) => ({ icon: ['schedule', 'precision_manufacturing', 'verified'][i], text }))}
-    langSwitch={{ href: `/${other}/${fm.slug}`, label: spec.further.lang_switch }}
   />
 
   <DemoSlot spec={spec} locale={locale} />

@@ -81,7 +81,6 @@ export interface FurtherBlock {
   eyebrow: string;
   back_home: string;
   review_label: string;
-  lang_switch: string;
 }
 
 /* ------------------------------ Quiz（与 MDX frontmatter schema 对齐） ------------------------------ */

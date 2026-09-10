@@ -174,6 +174,5 @@ export const spec: ConceptSpec = {
     eyebrow: '继续学习',
     back_home: '返回首页',
     review_label: '重看演示',
-    lang_switch: 'English Version',
   },
 };
