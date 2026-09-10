@@ -135,7 +135,7 @@ export const spec: ConceptSpec = {
     eyebrow: 'PART 02 · ENTERPRISE AI PLATFORM',
     title: 'From Data to Business Context',
     intro:
-      'A manufacturing enterprise rarely lacks data — what it lacks is business semantics spanning systems. See where Ontology sits between existing systems and AI applications, turning scattered data into reason-able business context.',
+      'A manufacturing enterprise rarely lacks data — what it lacks is business semantics spanning systems. See where Ontology sits between existing systems and AI applications, turning scattered data into structured business context for reasoning.',
     systems: [
       { code: 'ERP', name: 'Enterprise Resource Planning', knows: 'Orders' },
       { code: 'PLM', name: 'Product Lifecycle', knows: 'Products' },
