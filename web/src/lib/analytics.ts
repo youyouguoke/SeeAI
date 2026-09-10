@@ -34,4 +34,7 @@ export const ANALYTICS_EVENTS = {
   WORKBENCH_STATE: 'workbench_state',
   QUIZ_SUBMIT: 'quiz_submit',
   CONCEPT_CTA: 'concept_cta',
+  ACTION_DEMO_START: 'action_demo_start',
+  ACTION_DEMO_CLICK: 'action_demo_click',
+  ACTION_DEMO_COMPLETE: 'action_demo_complete',
 } as const;

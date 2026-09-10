@@ -5,6 +5,7 @@ import Hero from '../../components/ontology/Hero.astro';
 import Workbench, { type ChainNode } from '../../components/ontology/Workbench.astro';
 import IdeaSection from '../../components/ontology/IdeaSection.astro';
 import Definition from '../../components/ontology/Definition.astro';
+import ActionDemo from '../../components/ontology/ActionDemo';
 import Scenario from '../../components/ontology/Scenario.astro';
 import Misconceptions from '../../components/ontology/Misconceptions.astro';
 import Quiz from '../../components/ontology/Quiz.astro';
@@ -55,6 +56,7 @@ const chainRels: string[] = demo.edges.map((e) => e.rel_en);
   </IdeaSection>
 
   <Definition d={content.definition} />
+  <ActionDemo a={content.action} locale="en" client:load />
   <Scenario s={content.scenario} />
   <Misconceptions m={content.misconceptions} />
   <Quiz q={fm.quiz} />

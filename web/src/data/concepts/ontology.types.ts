@@ -80,7 +80,39 @@ export interface DefinitionContent {
   onto_label: string;
   onto_body: string;
   components_label: string;
-  components: { index: string; icon: string; name: string; role: string; body: string; example: string }[];
+  components: { index: string; icon: string; name: string; role: string; layer: 'static' | 'dynamic'; body: string; example: string }[];
+  /** Relationship vs Action 对照（§八） */
+  contrast: {
+    rel_label: string;
+    rel_role: string;
+    rel_from: string;
+    rel_verb: string;
+    rel_to: string;
+    act_label: string;
+    act_role: string;
+    act_from: string;
+    act_verb: string;
+    act_to: string;
+    summary: string;
+  };
+}
+
+/** Action 最小交互 Demo（PENDING → APPROVED，一次点击一次状态变化一条日志） */
+export interface ActionDemoContent {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  cr_label: string;
+  cr_title: string;
+  cr_body: string;
+  field_label: string;
+  pending: string;
+  approved: string;
+  button: string;
+  done_line: string;
+  log_label: string;
+  real_note: string;
+  action_id: string;
 }
 
 export interface ScenarioContent {
@@ -104,6 +136,8 @@ export interface MisconceptionsContent {
 export interface IdeaContent {
   label: string;
   title: string;
+  /** What exists? → Objects 四问级联（§十七） */
+  questions: { q: string; a: string }[];
 }
 
 export interface FurtherLearningContent {
@@ -117,6 +151,7 @@ export interface OntologyContent {
   workbench: WorkbenchContent;
   idea: IdeaContent;
   definition: DefinitionContent;
+  action: ActionDemoContent;
   scenario: ScenarioContent;
   misconceptions: MisconceptionsContent;
   further: FurtherLearningContent;

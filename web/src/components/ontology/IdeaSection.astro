@@ -14,4 +14,24 @@ const { idea } = Astro.props;
   <div class="max-w-2xl text-body text-on leading-relaxed">
     <slot />
   </div>
+
+  <!-- 四问级联：What exists → What can happen -->
+  <ol class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-3 max-w-4xl">
+    {
+      idea.questions.map((item, i) => (
+        <li class="relative bg-surface rounded-lg border border-surface-variant p-4">
+          <span class="absolute top-3 right-3 font-mono text-label text-outline">0{i + 1}</span>
+          <p class="text-label text-secondary">{item.q}</p>
+          <p
+            class:list={[
+              'font-title text-title font-semibold mt-1.5',
+              i === 3 ? 'text-primary' : 'text-on',
+            ]}
+          >
+            {item.a}
+          </p>
+        </li>
+      ))
+    }
+  </ol>
 </section>
