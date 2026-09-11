@@ -8,6 +8,8 @@ interface Props {
 
 const { locale, path } = Astro.props;
 const t = getStrings(locale);
+import { liveConcepts } from '../../data/concepts';
+
 /** 当前页在另一语言下的等价路径 */
 function alternatePath(p: string): string {
   if (p === '/' || p === '/zh' || p === '/en') return p === '/' ? '/' : `/${localePair[locale]}/`;
@@ -15,12 +17,16 @@ function alternatePath(p: string): string {
 }
 const alt = alternatePath(path);
 const homePath = `/${locale}/`;
-/** 已上线概念：slug → i18n label 键 */
-const concepts = [
-  { slug: 'ontology', label: t.header.nav.ontology as string },
-  { slug: 'digital-employee', label: t.header.nav.digitalEmployee as string },
-  { slug: 'agent', label: t.header.nav.agent as string },
-];
+/** 已上线概念（唯一数据源：data/concepts.ts）→ i18n 标签 */
+const labelKey: Record<string, 'ontology' | 'digitalEmployee' | 'agent'> = {
+  ontology: 'ontology',
+  'digital-employee': 'digitalEmployee',
+  agent: 'agent',
+};
+const concepts = liveConcepts.map((c) => ({
+  slug: c.slug,
+  label: t.header.nav[labelKey[c.slug]] as string,
+}));
 const activeConcept = concepts.find((c) => path.includes(`/${c.slug}`));
 ---
 

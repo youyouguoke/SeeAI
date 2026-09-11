@@ -1,6 +1,12 @@
 # SeeAI · 新增概念操作手册
 
 > 目标：新增一个标准型 AI 概念 = **1 份 ConceptSpec（zh/en）+ 2 份 MDX + 可选 Demo 插件**，
+> 不修改 Engine 教学骨架与首页以外的任何已有文件。
+
+> **⚠️ 概念状态唯一数据源：`src/data/concepts.ts` 注册表。**
+> 首页 Chain、Header 下拉、概念页 Further Learning 的状态徽标全部从注册表读取；
+> 禁止任何页面手写 "Live / Coming Soon"（Embedding、Agent 两次状态滞后的教训）。
+> 上线 = 本清单 + 注册表 `status: 'live'`，全站状态自动同步。
 > `npm run build` 出页，**零 Engine 组件改动**。
 > 已验证样例：`ontology`（本仓库的第一个 Concept）。
 

@@ -9,7 +9,7 @@ export const zh = {
     title: 'SeeAI — 看清 AI 如何真正运作',
     tagline: '交互式 AI 概念学习平台',
     description:
-      'SeeAI 用真实企业场景与交互演示讲清 AI 底层概念。首个概念：本体论（Ontology）——为什么数据都在，AI 却仍然答错。',
+      'SeeAI 用真实企业场景与交互演示讲清企业 AI：本体论——AI 如何理解企业世界；数字员工——AI 如何在企业里承担工作；Agent（智能体）——AI 如何完成多步任务。',
   },
   header: {
     badge: '交互式 AI 概念',

@@ -19,6 +19,7 @@ import Connection from './components/Connection.astro';
 import Misconceptions from './components/Misconceptions.astro';
 import Quiz from './components/Quiz.astro';
 import FurtherLearning from './components/FurtherLearning.astro';
+import { isLive, liveBadge } from '../data/concepts';
 
 /**
  * ConceptPage —— Concept Learning Engine 的教学骨架（怎么教）。
@@ -52,6 +53,20 @@ const fm = entry.data;
 const mod = modules[`../concepts/${fm.slug}/content.${locale}.ts`];
 if (!mod) throw new Error(`[engine] ConceptSpec not found: ${fm.slug}/content.${locale}.ts`);
 const spec = mod.spec;
+
+/** 上下概念卡的状态徽标以注册表为唯一数据源（live 时强制覆盖 MDX 手写值） */
+const nextCard = fm.next_concept
+  ? {
+      ...fm.next_concept,
+      preview_note: isLive(fm.next_concept.slug) ? liveBadge(locale) : fm.next_concept.preview_note,
+    }
+  : undefined;
+const prevCard = fm.prev_concept
+  ? {
+      ...fm.prev_concept,
+      preview_note: isLive(fm.prev_concept.slug) ? liveBadge(locale) : fm.prev_concept.preview_note,
+    }
+  : undefined;
 ---
 
 <BaseLayout
@@ -108,5 +123,5 @@ const spec = mod.spec;
 
   {spec.finalModel && <FlowModel f={spec.finalModel} id="final" />}
 
-  <FurtherLearning f={spec.further} next={fm.next_concept} prev={fm.prev_concept} locale={locale} />
+  <FurtherLearning f={spec.further} next={nextCard} prev={prevCard} locale={locale} />
 </BaseLayout>

@@ -8,10 +8,10 @@ export const en: UIStrings = {
   htmlLang: 'en',
   site: {
     name: 'SeeAI',
-    title: 'SeeAI — Understand AI by Seeing It',
+    title: 'SeeAI — Understand AI by Seeing It in Action',
     tagline: 'Interactive AI Concept Learning',
     description:
-      'SeeAI explains core AI concepts through real enterprise scenarios and interactive demonstrations. First concept: Ontology — why AI still gets it wrong when all the data is there.',
+      'SeeAI teaches enterprise AI through real business scenarios and interactive simulations: Ontology — how AI understands the enterprise world; Digital Employee — how AI takes on work within it; Agent — how AI completes multi-step tasks.',
   },
   header: {
     badge: 'Interactive AI Concepts',

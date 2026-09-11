@@ -7,14 +7,52 @@ import ConceptMatrix, { type ConceptMatrixCopy } from '../../components/home/Con
 import LearningArc, { type LearningArcCopy } from '../../components/home/LearningArc.astro';
 import Closing from '../../components/home/Closing.astro';
 import { getStrings } from '../../i18n/index';
+import { concepts } from '../../data/concepts';
 
 const t = getStrings('en');
 
+/**
+ * Chain 卡片的文案按 slug 维护，状态/链接由注册表（data/concepts.ts）驱动：
+ * status 手写曾两次滞后（Embedding、Agent），此处禁止再出现状态字面量。
+ */
+const chainCopy: Record<
+  string,
+  { title: string; body: string; visual: string; soon: { title: string; body: string; visual: string } }
+> = {
+  'digital-employee': {
+    title: 'Digital Employee — From Answering Questions to Getting Work Done',
+    body: 'Who can do the work: a defined business role with access, governed actions, and human oversight.',
+    visual: 'Digital employee workbench',
+    soon: { title: '', body: '', visual: '' },
+  },
+  agent: {
+    title: 'Agent — How AI Moves from Goals to Actions',
+    body: 'How the work is carried out: goal, planning, tools, observation, decision, and re-planning.',
+    visual: 'Agent task-loop sandbox',
+    soon: { title: '', body: '', visual: '' },
+  },
+};
+
+function chainCard(slug: string, index: string) {
+  const meta = concepts.find((c) => c.slug === slug)!;
+  const copy = chainCopy[slug];
+  const live = meta.status === 'live';
+  return {
+    index,
+    status: live ? 'Live' : 'Coming Soon',
+    statusDone: live,
+    title: live ? copy.title : copy.soon.title,
+    body: live ? copy.body : copy.soon.body,
+    visual: live ? copy.visual : copy.soon.visual,
+    ...(live ? { href: `/en/${slug}` } : {}),
+  };
+}
+
 const hero: HeroCopy = {
   label: 'Interactive AI Concepts · No hype, pure mechanics',
-  titleTop: 'Understand AI by seeing how it ',
-  titleAccent: 'actually',
-  titleBottom: ' works.',
+  titleTop: 'Understand AI by ',
+  titleAccent: 'Seeing It in Action',
+  titleBottom: '.',
   sub: 'Through real business problems and interactive demos, understand how AI moves from data and context to reasoning, decisions, and action.',
   ctaPrimary: 'See Ontology in Action',
   ctaPrimaryHref: '/en/ontology',
@@ -74,25 +112,7 @@ const matrix: ConceptMatrixCopy = {
     fullChapter: 'Explore the full Ontology chapter',
   },
   upcomingTitle: 'The Chain So Far',
-  upcoming: [
-    {
-      index: 'Concept 02',
-      status: 'Live',
-      statusDone: true,
-      title: 'Digital Employee — From Answering Questions to Getting Work Done',
-      body: 'Who can do the work: a defined business role with access, governed actions, and human oversight.',
-      visual: 'Digital employee workbench',
-      href: '/en/digital-employee',
-    },
-    {
-      index: 'Concept 03',
-      status: 'Coming Soon',
-      statusDone: false,
-      title: 'Agent — How AI Moves from Goals to Actions',
-      body: 'How the work is carried out: goal, planning, tools, observation, decision, and re-planning.',
-      visual: 'Agent task-loop sandbox',
-    },
-  ],
+  upcoming: [chainCard('digital-employee', 'Concept 02'), chainCard('agent', 'Concept 03')].filter((c) => c.title),
 };
 
 const arc: LearningArcCopy = {

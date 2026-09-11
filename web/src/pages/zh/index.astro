@@ -7,8 +7,43 @@ import ConceptMatrix, { type ConceptMatrixCopy } from '../../components/home/Con
 import LearningArc, { type LearningArcCopy } from '../../components/home/LearningArc.astro';
 import Closing from '../../components/home/Closing.astro';
 import { getStrings } from '../../i18n/index';
+import { concepts } from '../../data/concepts';
 
 const t = getStrings('zh');
+
+/** Chain 卡文案按 slug 维护；状态/链接由注册表（data/concepts.ts）驱动，禁止手写状态。 */
+const chainCopy: Record<
+  string,
+  { title: string; body: string; visual: string; soon: { title: string; body: string; visual: string } }
+> = {
+  'digital-employee': {
+    title: '数字员工 — 让 AI 不只是回答问题，而是完成工作',
+    body: '谁可以做这项工作：明确的业务角色、授权信息、受治理的动作与人工监督。',
+    visual: '数字员工任务推演沙盘',
+    soon: { title: '', body: '', visual: '' },
+  },
+  agent: {
+    title: 'Agent — AI 如何从目标走向行动',
+    body: '这项工作如何被完成：目标、规划、工具、观察、决策与重规划。',
+    visual: 'Agent 任务循环推演沙盘',
+    soon: { title: '', body: '', visual: '' },
+  },
+};
+
+function chainCard(slug: string, index: string) {
+  const meta = concepts.find((c) => c.slug === slug)!;
+  const copy = chainCopy[slug];
+  const live = meta.status === 'live';
+  return {
+    index,
+    status: live ? '已上线' : '即将上线',
+    statusDone: live,
+    title: live ? copy.title : copy.soon.title,
+    body: live ? copy.body : copy.soon.body,
+    visual: live ? copy.visual : copy.soon.visual,
+    ...(live ? { href: `/zh/${slug}` } : {}),
+  };
+}
 
 const hero: HeroCopy = {
   label: '交互式 AI 原理学习平台 · 拒绝空泛炒作，聚焦底层机制',
@@ -75,25 +110,7 @@ const matrix: ConceptMatrixCopy = {
     fullChapter: '探索本体论完整章节',
   },
   upcomingTitle: '主线认知链',
-  upcoming: [
-    {
-      index: '概念 02',
-      status: '已上线',
-      statusDone: true,
-      title: '数字员工 — 让 AI 不只是回答问题，而是完成工作',
-      body: '谁可以做这项工作：明确的业务角色、授权信息、受治理的动作与人工监督。',
-      visual: '数字员工任务推演沙盘',
-      href: '/zh/digital-employee',
-    },
-    {
-      index: '概念 03',
-      status: '即将上线',
-      statusDone: false,
-      title: 'Agent — AI 如何从目标走向行动',
-      body: '这项工作如何被完成：目标、规划、工具、观察、决策与重规划。',
-      visual: 'Agent 任务循环推演沙盘',
-    },
-  ],
+  upcoming: [chainCard('digital-employee', '概念 02'), chainCard('agent', '概念 03')].filter((c) => c.title),
 };
 
 const arc: LearningArcCopy = {
